@@ -1,0 +1,10 @@
+KEYNOTE RAGAS BASELINE EVALUATION
+================================================================================
+
+Test Cases: 8 (manual)
+
+AVERAGE SCORES:
+Faithfulness............................ 0.688
+Answer Relevancy........................ 0.918
+Context Precision....................... 0.903
+Context Recall.......................... 0.583
