@@ -2,7 +2,7 @@
 
 AI-powered app that helps songwriters create hit songs using Retrieval-Augmented Generation (RAG), graph-based musical analysis, and advanced evaluation metrics.
 
-> 📖 **[Read the Problem Statement](PROBLEM_STATEMENT.md)** - Learn about the creative bottleneck independent musicians face and how KeyNote solves it.
+> 📖 **[Read the Problem Statement](CERTIFICATION_CHALLENGE.md)** - Learn about the creative bottleneck independent musicians face and how KeyNote solves it.
 
 ## Features
 
