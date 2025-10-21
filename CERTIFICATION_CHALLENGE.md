@@ -1,4 +1,5 @@
 # Problem Statement: KeyNote
+> **[LOOM RECORDING](https://www.loom.com/share/b10c6797c2074e44b138c564405e64fa?sid=9a823227-2175-4c63-8ee9-522caddbff89)**
 
 ## The Core Problem
 

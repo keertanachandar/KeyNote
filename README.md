@@ -4,6 +4,8 @@
 
 > 📖 **[Read the Full Documentation](CERTIFICATION_CHALLENGE.md)** - Problem statement, technical architecture, evaluation results, and future roadmap.
 
+> **[LOOM RECORDING](https://www.loom.com/share/b10c6797c2074e44b138c564405e64fa?sid=9a823227-2175-4c63-8ee9-522caddbff89)**
+
 ## What KeyNote Does
 
 KeyNote helps independent musicians overcome the creative bottleneck of selecting chord progressions by:
