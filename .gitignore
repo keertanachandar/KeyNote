@@ -56,6 +56,10 @@ logs/
 # Vector Store Data
 chroma_data/
 faiss_index/
+vectorstore/
+
+# KeyNote Cache
+cache/
 
 # Audio files (if large)
 *.wav

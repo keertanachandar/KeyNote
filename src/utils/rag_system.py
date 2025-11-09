@@ -4,63 +4,123 @@ from langchain_core.documents import Document
 import pandas as pd
 import os
 from dotenv import load_dotenv
+from pathlib import Path
+from qdrant_client import QdrantClient
+from qdrant_client.models import Distance, VectorParams
 
 load_dotenv()
 
+# Persistent storage directory for Qdrant
+VECTORSTORE_DIR = Path("./vectorstore")
+VECTORSTORE_DIR.mkdir(parents=True, exist_ok=True)
+
 class ChordProgressionRAG:
-    def __init__(self, pdf_chunks, progressions_csv_path):
-        print("\n🎵 Initializing KeyNote RAG with Qdrant (in-memory)...")
+    def __init__(self, pdf_chunks, progressions_csv_path, use_persistent_storage=True):
+        print("\n🎵 Initializing KeyNote RAG with Qdrant...")
         
         self.embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
             api_key=os.getenv("OPENAI_API_KEY")
         )
         
-        # Create Qdrant vectorstore for PDFs (in-memory)
-        print("📖 Creating PDF vectorstore...")
-        if pdf_chunks and len(pdf_chunks) > 0:
-            self.pdf_vectorstore = Qdrant.from_documents(
-                pdf_chunks,
-                self.embeddings,
-                location=":memory:",
-                collection_name="keynote_pdfs"
-            )
-            print(f"   ✓ Indexed {len(pdf_chunks)} PDF chunks")
+        self.use_persistent_storage = use_persistent_storage
+        
+        # Initialize Qdrant client
+        if use_persistent_storage:
+            print(f"💾 Using persistent storage at {VECTORSTORE_DIR}")
+            self.qdrant_client = QdrantClient(path=str(VECTORSTORE_DIR))
         else:
-            print("   ⚠️  No PDF chunks provided")
-            self.pdf_vectorstore = None
+            print("🧠 Using in-memory storage")
+            self.qdrant_client = QdrantClient(location=":memory:")
+        
+        # Create or load PDF vectorstore
+        self.pdf_vectorstore = self._initialize_pdf_vectorstore(pdf_chunks)
         
         # Load progression data
         print("🎸 Loading progression database...")
         self.progressions_df = pd.read_csv(progressions_csv_path)
         print(f"   ✓ Loaded {len(self.progressions_df)} progressions")
         
-        # Create Qdrant vectorstore for progressions (in-memory)
-        print("🔍 Creating progression vectorstore...")
+        # Create or load progression vectorstore
+        self.progression_vectorstore = self._initialize_progression_vectorstore()
         
-        progression_docs = []
-        for _, row in self.progressions_df.iterrows():
-            text = f"Progression: {row['progression_roman']}. "
-            text += f"Chords: {row['chords_example']}. "
-            text += f"Frequency: {row['frequency']}. "
-            text += f"Genres: {row['genres']}. "
-            text += f"Mood: {row['mood']}. "
-            text += f"Famous songs: {row['example_songs']}"
+        print("✓ KeyNote RAG ready!\n")
+    
+    def _initialize_pdf_vectorstore(self, pdf_chunks):
+        """Initialize or load PDF vectorstore"""
+        collection_name = "keynote_pdfs"
+        
+        if pdf_chunks and len(pdf_chunks) > 0:
+            # Check if collection exists
+            collections = self.qdrant_client.get_collections().collections
+            collection_exists = any(c.name == collection_name for c in collections)
             
-            doc = Document(
-                page_content=text,
-                metadata=row.to_dict()
+            if collection_exists and self.use_persistent_storage:
+                print(f"📖 Loading existing PDF vectorstore ({collection_name})...")
+                vectorstore = Qdrant(
+                    client=self.qdrant_client,
+                    collection_name=collection_name,
+                    embeddings=self.embeddings
+                )
+                print(f"   ✓ Loaded existing collection with {self.qdrant_client.count(collection_name).count} vectors")
+            else:
+                print("📖 Creating PDF vectorstore...")
+                vectorstore = Qdrant.from_documents(
+                    pdf_chunks,
+                    self.embeddings,
+                    client=self.qdrant_client,
+                    collection_name=collection_name
+                )
+                print(f"   ✓ Indexed {len(pdf_chunks)} PDF chunks")
+            
+            return vectorstore
+        else:
+            print("   ⚠️  No PDF chunks provided")
+            return None
+    
+    def _initialize_progression_vectorstore(self):
+        """Initialize or load progression vectorstore"""
+        collection_name = "keynote_progressions"
+        
+        # Check if collection exists
+        collections = self.qdrant_client.get_collections().collections
+        collection_exists = any(c.name == collection_name for c in collections)
+        
+        if collection_exists and self.use_persistent_storage:
+            print(f"🔍 Loading existing progression vectorstore ({collection_name})...")
+            vectorstore = Qdrant(
+                client=self.qdrant_client,
+                collection_name=collection_name,
+                embeddings=self.embeddings
             )
-            progression_docs.append(doc)
+            print(f"   ✓ Loaded existing collection with {self.qdrant_client.count(collection_name).count} vectors")
+        else:
+            print("🔍 Creating progression vectorstore...")
+            
+            progression_docs = []
+            for _, row in self.progressions_df.iterrows():
+                text = f"Progression: {row['progression_roman']}. "
+                text += f"Chords: {row['chords_example']}. "
+                text += f"Frequency: {row['frequency']}. "
+                text += f"Genres: {row['genres']}. "
+                text += f"Mood: {row['mood']}. "
+                text += f"Famous songs: {row['example_songs']}"
+                
+                doc = Document(
+                    page_content=text,
+                    metadata=row.to_dict()
+                )
+                progression_docs.append(doc)
+            
+            vectorstore = Qdrant.from_documents(
+                progression_docs,
+                self.embeddings,
+                client=self.qdrant_client,
+                collection_name=collection_name
+            )
+            print(f"   ✓ Indexed {len(progression_docs)} progressions")
         
-        self.progression_vectorstore = Qdrant.from_documents(
-            progression_docs,
-            self.embeddings,
-            location=":memory:",
-            collection_name="keynote_progressions"
-        )
-        
-        print("✓ KeyNote RAG ready with Qdrant!\n")
+        return vectorstore
     
     def search_progressions(self, query, k=5):
         """Search for relevant chord progressions"""
@@ -86,6 +146,82 @@ class ChordProgressionRAG:
         if not self.pdf_vectorstore:
             return []
         return self.pdf_vectorstore.similarity_search(query, k=k)
+    
+    def search_all(self, query, k=5, pdf_k=None, progression_k=None):
+        """
+        NEW: Unified search across both PDF and progression vectorstores
+        
+        Args:
+            query: Search query
+            k: Total number of results to return
+            pdf_k: Number of results from PDF store (default: k//2)
+            progression_k: Number of results from progression store (default: k//2)
+        
+        Returns:
+            Dictionary with separate results from each store and combined results
+        """
+        if pdf_k is None:
+            pdf_k = k // 2
+        if progression_k is None:
+            progression_k = k - pdf_k  # Ensures total equals k
+        
+        results = {
+            'pdf_results': [],
+            'progression_results': [],
+            'combined_results': []
+        }
+        
+        # Search PDFs
+        if self.pdf_vectorstore:
+            pdf_results = self.pdf_vectorstore.similarity_search(query, k=pdf_k)
+            results['pdf_results'] = pdf_results
+            results['combined_results'].extend(pdf_results)
+        
+        # Search progressions
+        progression_results = self.progression_vectorstore.similarity_search(query, k=progression_k)
+        results['progression_results'] = progression_results
+        results['combined_results'].extend(progression_results)
+        
+        return results
+    
+    def search_all_with_scores(self, query, k=5, pdf_k=None, progression_k=None):
+        """
+        Unified search with similarity scores for better ranking
+        
+        Returns results sorted by relevance score across both vectorstores
+        """
+        if pdf_k is None:
+            pdf_k = k // 2
+        if progression_k is None:
+            progression_k = k - pdf_k
+        
+        all_results = []
+        
+        # Search PDFs with scores
+        if self.pdf_vectorstore:
+            pdf_results = self.pdf_vectorstore.similarity_search_with_score(query, k=pdf_k)
+            for doc, score in pdf_results:
+                doc.metadata['source_type'] = 'pdf'
+                doc.metadata['relevance_score'] = score
+                all_results.append((doc, score))
+        
+        # Search progressions with scores
+        progression_results = self.progression_vectorstore.similarity_search_with_score(query, k=progression_k)
+        for doc, score in progression_results:
+            doc.metadata['source_type'] = 'progression'
+            doc.metadata['relevance_score'] = score
+            all_results.append((doc, score))
+        
+        # Sort by score (lower is better for cosine distance)
+        all_results.sort(key=lambda x: x[1])
+        
+        # Take top k
+        top_results = all_results[:k]
+        
+        return {
+            'results': [doc for doc, score in top_results],
+            'scores': [score for doc, score in top_results]
+        }
 
     def search_progressions_with_metadata_filter(self, query, genre=None, mood=None, k=5):
         """
@@ -287,3 +423,70 @@ Top {k} indices:"""
             print(f"🎯 Broad query detected, using k={k}")
         
         return self.search_progressions(query, k=k)
+    
+    def search_progressions_by_section(self, section_type, harmonic_needs, emotional_intensity=None, k=3):
+        """
+        NEW: Section-specific progression search
+        Search for progressions tailored to specific song sections (verse, chorus, bridge)
+        
+        Args:
+            section_type: "verse", "chorus", or "bridge"
+            harmonic_needs: Description of what the section needs harmonically
+            emotional_intensity: Optional 1-10 scale intensity
+            k: Number of results
+            
+        Returns:
+            List of relevant progressions for this specific section
+        """
+        # Build section-specific query
+        query = f"{section_type} {harmonic_needs}"
+        
+        if emotional_intensity:
+            # Map intensity to energy descriptors
+            if emotional_intensity >= 7:
+                energy = "high energy climactic"
+            elif emotional_intensity >= 4:
+                energy = "moderate build"
+            else:
+                energy = "subdued intimate"
+            query += f" {energy}"
+        
+        print(f"🎯 Section-specific search for {section_type}: {query[:60]}...")
+        
+        # Use standard search with enriched query
+        results = self.search_progressions(query, k=k)
+        
+        return results
+    
+    def search_progressions_by_emotional_arc(self, emotional_arc, overall_mood, k=5):
+        """
+        NEW: Emotional arc-based search
+        Find progressions that match the emotional journey of the song
+        
+        Args:
+            emotional_arc: Description of emotional journey (e.g., "heartbreak to hope")
+            overall_mood: Overall mood keywords
+            k: Number of results
+            
+        Returns:
+            List of progressions that support the emotional narrative
+        """
+        # Build arc-aware query
+        query = f"{emotional_arc} {overall_mood} emotional journey storytelling"
+        
+        print(f"📖 Emotional arc search: {emotional_arc[:60]}...")
+        
+        # Use query expansion for richer semantic understanding
+        results = self.search_progressions_with_query_expansion(query, k=k)
+        
+        return results
+    
+    def clear_vectorstores(self):
+        """Clear all vectorstore collections (useful for rebuilding)"""
+        collections = ["keynote_pdfs", "keynote_progressions"]
+        for collection_name in collections:
+            try:
+                self.qdrant_client.delete_collection(collection_name)
+                print(f"✓ Deleted collection: {collection_name}")
+            except Exception as e:
+                print(f"⚠️  Could not delete {collection_name}: {e}")

@@ -46,9 +46,9 @@ print("="*80)
 
 print("\n📊 Step 1: Initializing KeyNote system...")
 
-docs = load_music_theory_pdfs("../data/pdfs")
+docs = load_music_theory_pdfs("../data/pdfs", use_cache=True, use_vision=True)
 chunks = chunk_documents(docs) if docs else []
-rag = ChordProgressionRAG(chunks, "../data/theorytab/progressions.csv")
+rag = ChordProgressionRAG(chunks, "../data/theorytab/progressions.csv", use_persistent_storage=True)
 orchestrator = LangGraphOrchestrator(rag)
 
 print("✓ KeyNote system ready!")

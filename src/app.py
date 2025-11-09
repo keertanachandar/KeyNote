@@ -19,14 +19,17 @@ def initialize_system():
     print("INITIALIZING KEYNOTE")
     print("="*60)
     
-    # Load PDFs
-    docs = load_music_theory_pdfs("data/pdfs")
+    # Load PDFs with caching and vision
+    # First load: ~2-5 min (vision API), subsequent loads: <5 sec (cached)
+    docs = load_music_theory_pdfs("data/pdfs", use_cache=True, use_vision=True)
+
     chunks = chunk_documents(docs) if docs else []
     
-    # Initialize RAG
+    # Initialize RAG with persistent storage
     rag = ChordProgressionRAG(
         chunks, 
-        "data/theorytab/progressions.csv"
+        "data/theorytab/progressions.csv",
+        use_persistent_storage=True  # Save Qdrant to disk for instant reloads
     )
     
     # Initialize orchestrator
@@ -46,7 +49,7 @@ st.markdown("---")
 
 # Initialize system
 try:
-    with st.spinner("Initializing KeyNote... (this may take 30 seconds on first load)"):
+    with st.spinner("Initializing KeyNote... (first load: 2-5 min, subsequent loads: <5 sec)"):
         orchestrator = initialize_system()
     st.success("✓ KeyNote is ready!")
 except Exception as e:
@@ -97,19 +100,79 @@ if submit:
                     reference_artists if reference_artists else None
                 )
                 
-                # Display lyrics analysis if available
+                # Display enhanced lyrics analysis if available
                 if results['lyrics_analysis']:
-                    st.success("✓ Lyrics analyzed successfully")
-                    with st.expander("📝 View Lyrics Analysis", expanded=False):
-                        analysis = results['lyrics_analysis']
-                        col1, col2 = st.columns(2)
+                    analysis = results['lyrics_analysis']
+                    
+                    # Check if it's a snippet or partial
+                    is_partial = analysis.get('is_partial', False)
+                    snippet_type = analysis.get('snippet_type', 'full_song')
+                    
+                    if is_partial:
+                        if snippet_type == 'single_line':
+                            st.success("✓ Lyrics analyzed (single line - basic analysis)")
+                            st.info("💡 Tip: For comprehensive emotional arc and section-specific recommendations, provide multiple verses.")
+                        elif snippet_type == 'snippet':
+                            st.success("✓ Lyrics analyzed (snippet - partial analysis)")
+                            st.info("💡 Tip: Section labels and emotional arc are inferred from the snippet. More complete results with full song.")
+                        elif snippet_type == 'partial_song':
+                            st.success("✓ Lyrics analyzed (partial song - inferred structure)")
+                            st.info("💡 Tip: Section labels (verse/chorus/bridge) are inferred from partial lyrics. For most accurate structure, provide the complete song.")
+                    else:
+                        st.success("✓ Lyrics analyzed with emotional arc tracking")
+                    
+                    with st.expander("📝 View Comprehensive Lyrics Analysis", expanded=False):
+                        # Overall Analysis
+                        st.markdown("### 🎭 Overall Analysis")
+                        col1, col2, col3 = st.columns(3)
                         with col1:
-                            st.markdown(f"**Mood:** {analysis['mood']}")
-                            st.markdown(f"**Energy:** {analysis['energy']}")
-                            st.markdown(f"**Genre:** {analysis['suggested_genre']}")
+                            st.markdown(f"**Mood:** {analysis.get('overall_mood', 'N/A')}")
+                            st.markdown(f"**Energy:** {analysis.get('overall_energy', 'N/A')}")
                         with col2:
-                            st.markdown(f"**Themes:** {', '.join(analysis['themes'])}")
-                            st.markdown(f"**Style:** {', '.join(analysis['style_indicators'])}")
+                            st.markdown(f"**Genre:** {analysis.get('overall_genre', 'N/A')}")
+                            st.markdown(f"**Themes:** {', '.join(analysis.get('overall_themes', []))}")
+                        with col3:
+                            st.markdown(f"**Emotional Arc:**")
+                            st.markdown(f"*{analysis.get('emotional_arc', 'N/A')}*")
+                        
+                        st.markdown("---")
+                        
+                        # Song Structure
+                        song_structure = analysis.get('song_structure', [])
+                        if song_structure:
+                            st.markdown("### 📖 Song Structure")
+                            for section in song_structure:
+                                with st.container():
+                                    st.markdown(f"**{section.get('section', 'Unknown').upper()}** "
+                                              f"(Intensity: {section.get('emotional_intensity', 'N/A')}/10)")
+                                    st.caption(f"Mood: {section.get('section_mood', 'N/A')}")
+                                    st.caption(f"Harmonic needs: {section.get('harmonic_needs', 'N/A')}")
+                                    st.markdown("")
+                        
+                        st.markdown("---")
+                        
+                        # Emotional Peaks
+                        peaks = analysis.get('emotional_peaks', [])
+                        if peaks:
+                            st.markdown("### ⭐ Emotional Peaks")
+                            for i, peak in enumerate(peaks, 1):
+                                st.markdown(f"**Peak {i}** [{peak.get('section', 'N/A')}] "
+                                          f"- Intensity: {peak.get('intensity', 'N/A')}/10")
+                                st.caption(f"\"{peak.get('line_text', 'N/A')}\"")
+                                st.info(f"💡 {peak.get('harmonic_suggestion', 'N/A')}")
+                                st.markdown("")
+                        
+                        st.markdown("---")
+                        
+                        # Section-Specific Recommendations
+                        section_recs = analysis.get('section_specific_recommendations', {})
+                        if section_recs:
+                            st.markdown("### 🎸 Section-Specific Chord Recommendations")
+                            for section, rec in section_recs.items():
+                                if rec:
+                                    st.markdown(f"**{section.capitalize()}:**")
+                                    st.markdown(f"- {rec}")
+                                    st.markdown("")
                 
                 # Display main recommendations
                 st.markdown("---")

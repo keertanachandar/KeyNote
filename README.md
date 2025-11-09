@@ -10,24 +10,31 @@
 
 KeyNote helps independent musicians overcome the creative bottleneck of selecting chord progressions by:
 
-1. **Analyzing lyrics** to extract mood, themes, and emotional intent
-2. **Retrieving relevant progressions** from a curated database of 69 progressions used in hit songs
-3. **Searching current trends** via Tavily to find contemporary artists using similar progressions
-4. **Retrieving music theory** explanations from PDF textbooks to explain *why* progressions work
-5. **Synthesizing personalized recommendations** that combine historical patterns, current examples, and educational context
+1. **Analyzing lyrics** to extract mood, themes, emotional arc, and section-specific needs (verse/chorus/bridge)
+2. **Tracking emotional journey** from beginning to end (e.g., "grief to acceptance," "nostalgia to celebration")
+3. **Identifying emotional peaks** and providing specific harmonic suggestions for climactic moments
+4. **Retrieving relevant progressions** from a curated database of 69 progressions, matched to emotional storytelling
+5. **Providing section-specific recommendations** with different progressions for verses vs. choruses vs. bridges
+6. **Searching current trends** via Tavily to find contemporary artists using similar progressions
+7. **Retrieving music theory** explanations from PDF textbooks to explain *why* progressions work
+8. **Synthesizing personalized recommendations** that combine emotional arc, section needs, historical patterns, and educational context
 
 ### Key Features
 
 - 🎵 **Multi-Agent LangGraph Pipeline**: 5-node sequential workflow (lyrics analysis → progression search → web search → theory retrieval → synthesis)
-- 🔍 **Advanced Retrieval**: Metadata filtering, query expansion, contextual reranking, hybrid search, dynamic k-value
+- 🎭 **Enhanced Emotional Arc Analysis**: Tracks emotional journey (e.g., "heartbreak to hope"), provides section-specific recommendations (verse/chorus/bridge), works with full songs or snippets
+- 🔍 **Advanced Retrieval**: Metadata filtering, query expansion, contextual reranking, hybrid search, dynamic k-value, emotional arc matching
 - 📊 **RAGAS Evaluation**: Faithfulness (0.773), Answer Relevancy (0.922), Context Precision (0.734), Context Recall (0.646)
-- 🎸 **Interactive Streamlit UI**: User-friendly interface for inputting lyrics, describing songs, and receiving recommendations
+- 🎸 **Interactive Streamlit UI**: User-friendly interface with comprehensive lyrics analysis display (structure, peaks, section recommendations)
 - 📚 **Music Theory Integration**: Retrieves explanations from 10 PDF documents (theory books, chord guides)
 
 ## Project Structure
 
 ```
 KeyNote/
+├── maintenance.py                 # 🔧 Maintenance utility (clear caches, status)
+├── test_enhanced_analysis.py      # 🧪 Test script for enhanced lyrics analysis
+├── test_snippet_analysis.py       # 🧪 Test script for snippet handling
 ├── src/                           # Source code
 │   ├── app.py                     # 🎸 Main Streamlit application (ENTRY POINT)
 │   ├── agents/                    # Multi-agent components
@@ -58,6 +65,10 @@ KeyNote/
 ├── uv.lock                        # Lock file (uv package manager)
 ├── LICENSE                        # Proprietary license
 ├── CERTIFICATION_CHALLENGE.md     # 📖 Full documentation
+├── ENHANCED_LYRICS_ANALYSIS_UPDATE.md  # 📖 Enhanced lyrics analysis feature docs
+├── SNIPPET_HANDLING.md            # 📖 How the system handles single lines and partial lyrics
+├── USAGE_GUIDE.md                 # 📖 Enhanced PDF loader & RAG usage guide
+├── CHANGES_SUMMARY.md             # 📖 Summary of recent updates
 └── README.md                      # This file
 ```
 
@@ -67,6 +78,7 @@ KeyNote/
 
 - **Python 3.13** (required for dependencies)
 - **uv** package manager (recommended) or pip
+- **Poppler** (required for PDF vision processing)
 
 ### Installation
 
@@ -76,7 +88,19 @@ KeyNote/
    cd KeyNote
    ```
 
-2. **Install dependencies with uv (recommended)**
+2. **Install Poppler (for PDF vision processing)**
+   ```bash
+   # macOS:
+   brew install poppler
+
+   # Ubuntu/Debian:
+   sudo apt-get install poppler-utils
+
+   # Windows: Download from https://github.com/oschwartz10612/poppler-windows/releases
+   # and add to PATH
+   ```
+
+3. **Install dependencies with uv (recommended)**
    ```bash
    # uv will auto-create virtual environment
    uv sync
@@ -89,7 +113,7 @@ KeyNote/
    pip install -e .
    ```
 
-3. **Set up environment variables**
+4. **Set up environment variables**
    ```bash
    # Create .env file in project root
    touch .env
@@ -108,11 +132,73 @@ KeyNote/
    LANGCHAIN_API_KEY=your-langsmith-api-key-here
    ```
 
-4. **Verify data files exist**
+5. **Verify data files exist**
    ```bash
    ls data/theorytab/progressions.csv  # Should exist
    ls data/pdfs/                        # Should contain 10 PDFs
    ```
+
+## Performance Optimizations 🚀
+
+KeyNote includes intelligent caching and persistent storage to dramatically reduce initialization time and API costs:
+
+### PDF Processing Cache
+
+**First Run:**
+- PDFs processed with GPT-4 Vision (~2-5 minutes)
+- Extracts text + analyzes diagrams, chord charts, and musical notation
+- Cached to `./cache/processed_pdfs/`
+
+**Subsequent Runs:**
+- Loads from cache instantly (<5 seconds)
+- Cache auto-invalidates when PDFs change (MD5 hash validation)
+
+```bash
+# Clear PDF cache to force reprocessing
+python -c "from src.utils.pdf_loader import clear_cache; clear_cache()"
+```
+
+### Persistent Vector Storage
+
+**First Run:**
+- Embeds all documents with OpenAI API (~30-60 seconds)
+- Creates Qdrant collections stored in `./vectorstore/`
+
+**Subsequent Runs:**
+- Loads vectorstores from disk (<5 seconds)
+- No re-embedding needed, no API calls
+
+```bash
+# To rebuild vectorstores (e.g., after data changes):
+python -c "from src.utils.rag_system import ChordProgressionRAG; rag = ChordProgressionRAG([], 'data/theorytab/progressions.csv', use_persistent_storage=True); rag.clear_vectorstores()"
+```
+
+### Vision Processing for PDFs
+
+KeyNote uses **GPT-4 Vision** to extract content from:
+- Chord diagrams and tablature
+- Musical notation and sheet music
+- Theory diagrams (circle of fifths, key relationships)
+- Tables and charts
+
+You can disable vision processing for faster (text-only) loading:
+```python
+# In src/app.py or evaluation scripts
+docs = load_music_theory_pdfs("data/pdfs", use_cache=True, use_vision=False)
+```
+
+### Storage Structure
+```
+KeyNote/
+├── cache/
+│   └── processed_pdfs/
+│       ├── processed_documents.json  # Cached PDF content
+│       └── pdf_hashes.json          # File change detection
+└── vectorstore/                     # Persistent Qdrant storage
+    ├── collection/
+    ├── keynote_pdfs/                # PDF embeddings
+    └── keynote_progressions/        # Progression embeddings
+```
 
 ## Running KeyNote
 
@@ -169,6 +255,21 @@ python src/utils/generate_progressions.py
 ```
 Output: `data/theorytab/generated_progressions.csv`
 
+**Manage caches and vectorstores:**
+```bash
+# Show current storage status
+python maintenance.py status
+
+# Clear PDF processing cache
+python maintenance.py clear-cache
+
+# Clear Qdrant vectorstores
+python maintenance.py clear-vectors
+
+# Clear everything
+python maintenance.py clear-all
+```
+
 ### Development
 
 **Format code:**
@@ -219,7 +320,7 @@ KeyNote uses a sequential 5-node pipeline orchestrated by LangGraph:
 | **LLM** | OpenAI GPT-4o, GPT-4o-mini | Lyrics analysis, synthesis, query expansion |
 | **Embeddings** | OpenAI text-embedding-3-small | Semantic search (1536d vectors) |
 | **Orchestration** | LangGraph | Multi-agent workflow coordination |
-| **Vector DB** | Qdrant (in-memory) | Fast vector similarity search |
+| **Vector DB** | Qdrant (persistent) | Fast vector similarity search with disk storage |
 | **Web Search** | Tavily API | Real-time music trend discovery |
 | **Frontend** | Streamlit | Interactive Python UI |
 | **Evaluation** | RAGAS | RAG quality metrics (faithfulness, relevancy, precision, recall) |
@@ -276,6 +377,32 @@ Full results: `src/evaluation/advanced_retrieval_comparison.csv`
 # Make sure you're in the project root and dependencies are installed
 cd /path/to/KeyNote
 uv sync  # or pip install -e .
+```
+
+**Issue: "Unable to get page count. Is poppler installed?"**
+```bash
+# Poppler is required for PDF-to-image conversion (vision processing)
+
+# macOS:
+brew install poppler
+
+# Ubuntu/Debian:
+sudo apt-get install poppler-utils
+
+# Windows:
+# Download from: https://github.com/oschwartz10612/poppler-windows/releases
+# Add to PATH
+```
+
+**Issue: Slow first load (2-5 minutes)**
+This is normal! First run processes PDFs with GPT-4 Vision. Subsequent loads are <5 seconds thanks to caching.
+
+**Issue: Cache/vectorstore out of sync**
+```bash
+# Clear all caches and rebuild
+python -c "from src.utils.pdf_loader import clear_cache; clear_cache()"
+rm -rf vectorstore/
+# Then restart the app - everything will rebuild
 ```
 
 **Issue: OpenAI API key not found**
