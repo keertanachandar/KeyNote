@@ -23,6 +23,8 @@ KeyNote helps independent musicians overcome the creative bottleneck of selectin
 
 - 🎵 **Multi-Agent LangGraph Pipeline**: 5-node sequential workflow (lyrics analysis → progression search → web search → theory retrieval → synthesis)
 - 🎭 **Enhanced Emotional Arc Analysis**: Tracks emotional journey (e.g., "heartbreak to hope"), provides section-specific recommendations (verse/chorus/bridge), works with full songs or snippets
+- 🎯 **Smart Match Scoring**: Each progression option shows a percentage match (50-100%) based on mood, genre, energy, and lyrical analysis
+- 📑 **Multiple Options**: Browse 6+ chord progression alternatives with interactive tabs - click through to find your perfect match
 - 🔍 **Advanced Retrieval**: Metadata filtering, query expansion, contextual reranking, hybrid search, dynamic k-value, emotional arc matching
 - 📊 **RAGAS Evaluation**: Faithfulness (0.773), Answer Relevancy (0.922), Context Precision (0.734), Context Recall (0.646)
 - 🎸 **Interactive Streamlit UI**: User-friendly interface with comprehensive lyrics analysis display (structure, peaks, section recommendations)
@@ -76,67 +78,100 @@ KeyNote/
 
 ### Prerequisites
 
-- **Python 3.13** (required for dependencies)
-- **uv** package manager (recommended) or pip
+- **Python 3.10+** (Python 3.11 or 3.13 recommended)
+- **pip** or **uv** package manager
 - **Poppler** (required for PDF vision processing)
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/keynote.git
-   cd KeyNote
-   ```
+#### Step 1: Clone the Repository
+```bash
+git clone https://github.com/yourusername/keynote.git
+cd KeyNote
+```
 
-2. **Install Poppler (for PDF vision processing)**
-   ```bash
-   # macOS:
-   brew install poppler
+#### Step 2: Install Poppler (Required for PDF Vision Processing)
 
-   # Ubuntu/Debian:
-   sudo apt-get install poppler-utils
+**macOS:**
+```bash
+brew install poppler
+```
 
-   # Windows: Download from https://github.com/oschwartz10612/poppler-windows/releases
-   # and add to PATH
-   ```
+**Ubuntu/Debian:**
+```bash
+sudo apt-get update
+sudo apt-get install poppler-utils
+```
 
-3. **Install dependencies with uv (recommended)**
-   ```bash
-   # uv will auto-create virtual environment
-   uv sync
-   ```
+**Windows:**
+1. Download from: https://github.com/oschwartz10612/poppler-windows/releases
+2. Extract to `C:\Program Files\poppler`
+3. Add `C:\Program Files\poppler\Library\bin` to your PATH
 
-   **OR with pip:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Windows: venv\Scripts\activate
-   pip install -e .
-   ```
+#### Step 3: Set Up Python Environment
 
-4. **Set up environment variables**
-   ```bash
-   # Create .env file in project root
-   touch .env
-   ```
+**Option A: Using pip (Recommended for most users)**
+```bash
+# Create virtual environment
+python -m venv venv
 
-   Add the following to `.env`:
-   ```bash
-   # Required
-   OPENAI_API_KEY=sk-your-openai-api-key-here
-   
-   # Optional (for web search)
-   TAVILY_API_KEY=tvly-your-tavily-api-key-here
-   
-   # Optional (for monitoring)
-   LANGCHAIN_TRACING_V2=true
-   LANGCHAIN_API_KEY=your-langsmith-api-key-here
-   ```
+# Activate virtual environment
+# On macOS/Linux:
+source venv/bin/activate
 
-5. **Verify data files exist**
-   ```bash
-   ls data/theorytab/progressions.csv  # Should exist
-   ls data/pdfs/                        # Should contain 10 PDFs
-   ```
+# On Windows:
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+**Option B: Using uv (Faster alternative)**
+```bash
+# Install uv if you don't have it
+pip install uv
+
+# uv will auto-create virtual environment and install dependencies
+uv sync
+```
+
+#### Step 4: Set Up Environment Variables
+
+Create a `.env` file in the project root:
+
+```bash
+# On macOS/Linux:
+touch .env
+
+# On Windows:
+type nul > .env
+```
+
+Add your API keys to `.env`:
+```bash
+# REQUIRED - Get from https://platform.openai.com/api-keys
+OPENAI_API_KEY=sk-your-openai-api-key-here
+
+# OPTIONAL - For web search (get from https://tavily.com/)
+TAVILY_API_KEY=tvly-your-tavily-api-key-here
+
+# OPTIONAL - For LangSmith monitoring
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your-langsmith-api-key-here
+```
+
+**Important:** Never commit your `.env` file to git (it's already in `.gitignore`)
+
+#### Step 5: Verify Installation
+
+Check that data files exist:
+```bash
+# Should show progressions.csv
+ls data/theorytab/
+
+# Should show 10 PDF files
+ls data/pdfs/
+```
 
 ## Performance Optimizations 🚀
 
@@ -200,36 +235,144 @@ KeyNote/
     └── keynote_progressions/        # Progression embeddings
 ```
 
-## Running KeyNote
+## 🚀 Running KeyNote
 
-### 🎸 Run the Main Application (Streamlit UI)
+### Run the Streamlit App
+
+Make sure your virtual environment is activated, then run:
 
 ```bash
+# Ensure you're in the KeyNote directory
+cd /path/to/KeyNote
+
+# Activate virtual environment if not already active
+source venv/bin/activate  # macOS/Linux
+# OR
+venv\Scripts\activate  # Windows
+
+# Run the Streamlit app
 streamlit run src/app.py
 ```
 
-Then open your browser to **http://localhost:8501**
+**The app will automatically:**
+1. Start a local web server
+2. Open your browser to `http://localhost:8501`
+3. Load PDFs (first run: 2-5 min with vision API, subsequent: <5 sec from cache)
+4. Initialize the RAG system with persistent vectorstores
 
-**What you'll see:**
-1. Input form for song description, reference artists, and lyrics
-2. Click "Generate Chord Progressions"
-3. View:
-   - Lyrics analysis (mood, energy, themes, suggested genre)
-   - 3-5 personalized chord progression recommendations
-   - Historical examples from famous songs
-   - Current trends from Tavily search
-   - Music theory explanations
+**Troubleshooting:**
+- If `streamlit` command not found: `pip install streamlit`
+- If port 8501 is busy: `streamlit run src/app.py --server.port 8502`
+- If browser doesn't open: manually navigate to `http://localhost:8501`
 
-**Example Usage:**
-- **Song Description:** "melancholic indie folk, slow tempo"
-- **Reference Artists:** "Phoebe Bridgers, Bon Iver"
-- **Lyrics:** 
-  ```
-  Walking through the empty streets at dawn
-  Everything reminds me that you're gone
-  The coffee shop where we used to meet
-  Now just echoes of memory
-  ```
+---
+
+### Using the App
+
+**Provide Either Description OR Lyrics (or both for best results):**
+
+**Option 1: Description Only**
+- Mood/genre: "melancholic indie folk, slow tempo"
+- Reference artists (optional): "Phoebe Bridgers, Bon Iver"
+
+**Option 2: Lyrics Only**
+```
+Walking through the empty streets at dawn
+Everything reminds me that you're gone
+The coffee shop where we used to meet
+Now just echoes of memory
+```
+
+**Option 3: Both Description + Lyrics (Recommended)**
+- Description helps with genre/mood
+- Lyrics enable emotional arc analysis
+
+**Tips:**
+- ✅ Works with any amount of lyrics (single line, verse, or full song)
+- ✅ More lyrics = better emotional arc analysis
+- ✅ Section-specific recommendations if you provide multiple verses
+- ✅ Lyrics-only input automatically analyzed for mood and genre
+
+**Click "Generate Chord Progressions" to get:**
+- 📝 **Lyrics Analysis** - Emotional arc, song structure, peaks
+- 🎯 **Multiple Progression Options** - 6+ alternatives with match scores (75-95%)
+- 📑 **Interactive Tabs** - Click through each option to explore
+- 💡 **Match Explanations** - See why each progression fits your song
+- 📚 **Famous Examples** - Songs that used these progressions
+- 🎓 **Music Theory** - Detailed AI analysis of why progressions work
+
+---
+
+### First Run vs. Subsequent Runs
+
+**First Run (~2-5 minutes):**
+- Processes PDFs with GPT-4 Vision (extracts diagrams, chord charts)
+- Embeds documents with OpenAI API
+- Saves everything to cache/vectorstore for future use
+
+**Subsequent Runs (<10 seconds):**
+- Loads from cache (no PDF processing)
+- Loads from vectorstore (no re-embedding)
+- Ready to use immediately!
+
+---
+
+### Example Sessions
+
+**Example 1: Description + Lyrics (Best Results)**
+```
+📝 Input:
+Description: "melancholic indie folk building to hope"
+Artists: "Phoebe Bridgers, Bon Iver"
+Lyrics: [Full verse or song]
+
+✓ Results:
+📊 Emotional Arc: "grief transitioning to acceptance and hope"
+
+🎵 6 Progression Options (click through tabs):
+   Option 1 (92% match) 🎯 Excellent Match
+   ├─ vi-IV-I-V (Am-F-C-G)
+   ├─ ✓ Matches your melancholic mood
+   ├─ ✓ Perfect for indie folk genre
+   └─ ✓ Supports your emotional journey
+   
+   Option 2 (88% match) ✨ Great Match
+   ├─ I-V-vi-IV (C-G-Am-F)
+   └─ Popular in emotional indie songs
+   
+   Option 3 (85% match) ✨ Great Match
+   Option 4 (78% match) 👍 Good Match
+   [... and 2 more options]
+
+📚 Famous Examples: Bon Iver, Fleet Foxes, The National
+🎓 Detailed AI analysis with music theory explanations
+```
+
+**Example 2: Lyrics Only (Automatically Analyzed)**
+```
+📝 Input:
+Lyrics:
+"Walking through the empty streets at dawn
+Everything reminds me that you're gone
+But somewhere in the silence I can hear
+A whisper telling me you're still near"
+
+✓ Results:
+📊 Detected Mood: melancholic, reflective, hopeful
+📊 Emotional Arc: "loss moving toward comfort"
+🎵 Recommended Progressions automatically matched to lyrical themes
+```
+
+**Example 3: Description Only (Quick Genre-Based)**
+```
+📝 Input:
+Description: "upbeat summer pop anthem"
+Artists: "Taylor Swift, Olivia Rodrigo"
+
+✓ Results:
+🎵 Pop-focused progressions (I-V-vi-IV, I-IV-V, etc.)
+📚 Historical Examples from pop hits
+```
 
 ### 📊 Run Evaluation Scripts
 

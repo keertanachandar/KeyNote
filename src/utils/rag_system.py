@@ -15,7 +15,7 @@ VECTORSTORE_DIR = Path("./vectorstore")
 VECTORSTORE_DIR.mkdir(parents=True, exist_ok=True)
 
 class ChordProgressionRAG:
-    def __init__(self, pdf_chunks, progressions_csv_path, use_persistent_storage=True):
+    def __init__(self, pdf_chunks, progressions_csv_path, use_persistent_storage=False):
         print("\n🎵 Initializing KeyNote RAG with Qdrant...")
         
         self.embeddings = OpenAIEmbeddings(
@@ -23,15 +23,9 @@ class ChordProgressionRAG:
             api_key=os.getenv("OPENAI_API_KEY")
         )
         
-        self.use_persistent_storage = use_persistent_storage
-        
-        # Initialize Qdrant client
-        if use_persistent_storage:
-            print(f"💾 Using persistent storage at {VECTORSTORE_DIR}")
-            self.qdrant_client = QdrantClient(path=str(VECTORSTORE_DIR))
-        else:
-            print("🧠 Using in-memory storage")
-            self.qdrant_client = QdrantClient(location=":memory:")
+        # Temporarily using in-memory storage due to version compatibility
+        self.use_persistent_storage = False
+        print("🧠 Using in-memory storage (fast initialization)")
         
         # Create or load PDF vectorstore
         self.pdf_vectorstore = self._initialize_pdf_vectorstore(pdf_chunks)
@@ -51,28 +45,14 @@ class ChordProgressionRAG:
         collection_name = "keynote_pdfs"
         
         if pdf_chunks and len(pdf_chunks) > 0:
-            # Check if collection exists
-            collections = self.qdrant_client.get_collections().collections
-            collection_exists = any(c.name == collection_name for c in collections)
-            
-            if collection_exists and self.use_persistent_storage:
-                print(f"📖 Loading existing PDF vectorstore ({collection_name})...")
-                vectorstore = Qdrant(
-                    client=self.qdrant_client,
-                    collection_name=collection_name,
-                    embeddings=self.embeddings
-                )
-                print(f"   ✓ Loaded existing collection with {self.qdrant_client.count(collection_name).count} vectors")
-            else:
-                print("📖 Creating PDF vectorstore...")
-                vectorstore = Qdrant.from_documents(
-                    pdf_chunks,
-                    self.embeddings,
-                    client=self.qdrant_client,
-                    collection_name=collection_name
-                )
-                print(f"   ✓ Indexed {len(pdf_chunks)} PDF chunks")
-            
+            print("📖 Creating PDF vectorstore...")
+            vectorstore = Qdrant.from_documents(
+                pdf_chunks,
+                self.embeddings,
+                location=":memory:",
+                collection_name=collection_name,
+            )
+            print(f"   ✓ Indexed {len(pdf_chunks)} PDF chunks")
             return vectorstore
         else:
             print("   ⚠️  No PDF chunks provided")
@@ -82,43 +62,30 @@ class ChordProgressionRAG:
         """Initialize or load progression vectorstore"""
         collection_name = "keynote_progressions"
         
-        # Check if collection exists
-        collections = self.qdrant_client.get_collections().collections
-        collection_exists = any(c.name == collection_name for c in collections)
+        print("🔍 Creating progression vectorstore...")
         
-        if collection_exists and self.use_persistent_storage:
-            print(f"🔍 Loading existing progression vectorstore ({collection_name})...")
-            vectorstore = Qdrant(
-                client=self.qdrant_client,
-                collection_name=collection_name,
-                embeddings=self.embeddings
-            )
-            print(f"   ✓ Loaded existing collection with {self.qdrant_client.count(collection_name).count} vectors")
-        else:
-            print("🔍 Creating progression vectorstore...")
+        progression_docs = []
+        for _, row in self.progressions_df.iterrows():
+            text = f"Progression: {row['progression_roman']}. "
+            text += f"Chords: {row['chords_example']}. "
+            text += f"Frequency: {row['frequency']}. "
+            text += f"Genres: {row['genres']}. "
+            text += f"Mood: {row['mood']}. "
+            text += f"Famous songs: {row['example_songs']}"
             
-            progression_docs = []
-            for _, row in self.progressions_df.iterrows():
-                text = f"Progression: {row['progression_roman']}. "
-                text += f"Chords: {row['chords_example']}. "
-                text += f"Frequency: {row['frequency']}. "
-                text += f"Genres: {row['genres']}. "
-                text += f"Mood: {row['mood']}. "
-                text += f"Famous songs: {row['example_songs']}"
-                
-                doc = Document(
-                    page_content=text,
-                    metadata=row.to_dict()
-                )
-                progression_docs.append(doc)
-            
-            vectorstore = Qdrant.from_documents(
-                progression_docs,
-                self.embeddings,
-                client=self.qdrant_client,
-                collection_name=collection_name
+            doc = Document(
+                page_content=text,
+                metadata=row.to_dict()
             )
-            print(f"   ✓ Indexed {len(progression_docs)} progressions")
+            progression_docs.append(doc)
+        
+        vectorstore = Qdrant.from_documents(
+            progression_docs,
+            self.embeddings,
+            location=":memory:",
+            collection_name=collection_name,
+        )
+        print(f"   ✓ Indexed {len(progression_docs)} progressions")
         
         return vectorstore
     

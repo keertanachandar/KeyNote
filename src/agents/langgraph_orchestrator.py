@@ -79,6 +79,54 @@ class LangGraphOrchestrator:
         
         return state
     
+    def _score_progression_match(self, progression, lyrics_analysis):
+        """Score how well a progression matches the lyrics analysis (0-100)"""
+        if not lyrics_analysis:
+            return 75  # Default score without analysis
+        
+        score = 0
+        max_score = 0
+        
+        # Mood match (40 points)
+        max_score += 40
+        prog_mood = progression.metadata.get('mood', '').lower()
+        lyric_mood = lyrics_analysis.get('overall_mood', '').lower()
+        if lyric_mood in prog_mood or prog_mood in lyric_mood:
+            score += 40
+        elif any(word in prog_mood for word in lyric_mood.split()[:3]):
+            score += 25
+        
+        # Genre match (30 points)
+        max_score += 30
+        prog_genres = progression.metadata.get('genres', '').lower()
+        lyric_genre = lyrics_analysis.get('overall_genre', '').lower()
+        if lyric_genre in prog_genres:
+            score += 30
+        elif any(word in prog_genres for word in lyric_genre.split()[:2]):
+            score += 15
+        
+        # Energy level match (20 points)
+        max_score += 20
+        energy = lyrics_analysis.get('overall_energy', 'medium').lower()
+        if 'high' in energy and ('uplifting' in prog_mood or 'energetic' in prog_mood):
+            score += 20
+        elif 'low' in energy and ('melancholic' in prog_mood or 'somber' in prog_mood):
+            score += 20
+        elif 'medium' in energy:
+            score += 10
+        
+        # Popularity/Frequency (10 points)
+        max_score += 10
+        frequency = progression.metadata.get('frequency', 'medium').lower()
+        if 'very common' in frequency or 'common' in frequency:
+            score += 10
+        elif 'moderate' in frequency:
+            score += 5
+        
+        # Convert to percentage
+        percentage = int((score / max_score) * 100) if max_score > 0 else 75
+        return min(100, max(50, percentage))  # Clamp between 50-100
+    
     def progression_search_node(self, state: GraphState) -> GraphState:
         """Node 2: Search for relevant chord progressions - Enhanced with emotional arc"""
         print("📚 Node 2: Searching progressions...")
@@ -95,9 +143,22 @@ class LangGraphOrchestrator:
             print(f"   → Searching with emotional context: {mood} - {arc[:50]}...")
         
         # Search progressions with enriched query
-        results = self.rag.search_progressions(query, k=5)
-        state["progressions"] = results
-        print(f"   ✓ Found {len(results)} progressions")
+        results = self.rag.search_progressions(query, k=8)  # Get more options
+        
+        # Score each progression
+        scored_progressions = []
+        for prog in results:
+            match_score = self._score_progression_match(prog, state["lyrics_analysis"])
+            scored_progressions.append({
+                'progression': prog,
+                'match_score': match_score
+            })
+        
+        # Sort by score (highest first)
+        scored_progressions.sort(key=lambda x: x['match_score'], reverse=True)
+        
+        state["progressions"] = scored_progressions
+        print(f"   ✓ Found {len(scored_progressions)} progressions (scored)")
         
         return state
     
@@ -178,10 +239,12 @@ class LangGraphOrchestrator:
                         context += f"- {section.capitalize()}: {rec}\n"
                 context += "\n"
         
-        context += "=== HISTORICAL PROGRESSIONS ===\n"
-        for i, prog in enumerate(state["progressions"], 1):
+        context += "=== HISTORICAL PROGRESSIONS (with match scores) ===\n"
+        for i, scored_prog in enumerate(state["progressions"][:5], 1):  # Top 5 for synthesis
+            prog = scored_prog['progression']
+            score = scored_prog['match_score']
             context += f"{i}. {prog.metadata['progression_roman']} "
-            context += f"({prog.metadata['chords_example']})\n"
+            context += f"({prog.metadata['chords_example']}) - Match: {score}%\n"
             context += f"   Mood: {prog.metadata['mood']}\n"
             context += f"   Examples: {prog.metadata.get('example_songs', '')[:100]}\n\n"
         
