@@ -19,4 +19,6 @@ dependencies = [
     "langchain>=0.3.19",
     "qdrant-client>=1.13.2",
     "rank-bm25>=0.2.2",
+    "beautifulsoup4>=4.14.2",
+    "requests>=2.32.5",
 ]

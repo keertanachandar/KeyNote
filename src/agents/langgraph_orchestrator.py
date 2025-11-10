@@ -19,6 +19,7 @@ class GraphState(TypedDict):
     lyrics_analysis: dict
     progressions: list
     current_examples: list
+    web_search_details: dict  # NEW: Structured web search results
     theory_context: list
     final_synthesis: str
     messages: Annotated[Sequence[BaseMessage], operator.add]
@@ -163,19 +164,66 @@ class LangGraphOrchestrator:
         return state
     
     def web_search_node(self, state: GraphState) -> GraphState:
-        """Node 3: Search current trends with Tavily"""
-        print("🔍 Node 3: Searching current trends...")
+        """Node 3: Enhanced multi-faceted web search with Tavily"""
+        print("🔍 Node 3: Enhanced web search...")
         
-        # Build Tavily query
-        query = state["user_input"]
+        if not self.tavily.is_available():
+            print("   ⚠️  Tavily not configured, skipping web search")
+            state["current_examples"] = []
+            state["web_search_details"] = {}
+            return state
+        
+        # Parse artist references
+        artist_list = None
         if state.get("reference_artists"):
-            query = f"{state['reference_artists']} {query}"
-        query += " chord progressions 2025"
+            artist_str = state["reference_artists"].strip()
+            if artist_str:
+                # Split by comma and clean up
+                artist_list = [a.strip() for a in artist_str.split(",") if a.strip()]
         
-        # Search
-        results = self.tavily.search_current_examples(query, max_results=3)
-        state["current_examples"] = results
-        print(f"   ✓ Found {len(results)} current examples")
+        # Use comprehensive search with all available context
+        try:
+            results = self.tavily.comprehensive_search(
+                user_query=state["user_input"],
+                lyrics_analysis=state.get("lyrics_analysis"),
+                artist_references=artist_list
+            )
+            
+            # Flatten and prioritize results
+            all_results = []
+            
+            # Priority 1: Artist-specific insights (most relevant)
+            all_results.extend(results.get("artist_styles", []))
+            
+            # Priority 2: Genre trends (current and relevant)
+            all_results.extend(results.get("trends", []))
+            
+            # Priority 3: Production techniques (actionable)
+            all_results.extend(results.get("production", []))
+            
+            # Priority 4: Theory and similar songs
+            all_results.extend(results.get("theory", []))
+            all_results.extend(results.get("similar_songs", []))
+            
+            # Store top 5 for synthesis (avoid overwhelming the LLM)
+            state["current_examples"] = all_results[:5]
+            
+            # Store structured results for advanced use
+            state["web_search_details"] = results
+            
+            # Detailed logging
+            print(f"   ✓ Found web results:")
+            print(f"     - Artist styles: {len(results.get('artist_styles', []))}")
+            print(f"     - Genre trends: {len(results.get('trends', []))}")
+            print(f"     - Production tips: {len(results.get('production', []))}")
+            print(f"     - Theory: {len(results.get('theory', []))}")
+            print(f"     - Similar songs: {len(results.get('similar_songs', []))}")
+            print(f"   → Using top {len(state['current_examples'])} for synthesis")
+            
+        except Exception as e:
+            print(f"   ⚠️  Web search error: {e}")
+            state["current_examples"] = []
+            state["web_search_details"] = {}
         
         return state
     
@@ -248,39 +296,73 @@ class LangGraphOrchestrator:
             context += f"   Mood: {prog.metadata['mood']}\n"
             context += f"   Examples: {prog.metadata.get('example_songs', '')[:100]}\n\n"
         
-        if state["current_examples"]:
+        # Enhanced web insights section
+        if state.get("web_search_details"):
+            web_details = state["web_search_details"]
+            context += "=== WEB INSIGHTS ===\n"
+            
+            # Artist-specific insights
+            if web_details.get("artist_styles"):
+                context += "\nArtist Songwriting Styles:\n"
+                for result in web_details["artist_styles"][:2]:
+                    context += f"- {result.get('title', 'N/A')}\n"
+                    context += f"  {result.get('content', '')[:200]}...\n"
+                context += "\n"
+            
+            # Genre trends
+            if web_details.get("trends"):
+                context += "Current Genre Trends (2024):\n"
+                for result in web_details["trends"][:2]:
+                    context += f"- {result.get('title', 'N/A')}\n"
+                    context += f"  {result.get('content', '')[:150]}...\n"
+                context += "\n"
+            
+            # Production techniques
+            if web_details.get("production"):
+                context += "Production Techniques:\n"
+                for result in web_details["production"][:1]:
+                    context += f"- {result.get('title', 'N/A')}\n"
+                    context += f"  {result.get('content', '')[:150]}...\n"
+                context += "\n"
+        elif state.get("current_examples"):
+            # Fallback to flattened results if structured not available
             context += "=== CURRENT TRENDS ===\n"
             for ex in state["current_examples"][:2]:
-                context += f"- {ex['title']}: {ex['content'][:150]}\n\n"
+                context += f"- {ex.get('title', 'N/A')}: {ex.get('content', '')[:150]}\n\n"
         
         if state["theory_context"]:
             context += "=== MUSIC THEORY CONTEXT ===\n"
             for t in state["theory_context"]:
                 context += f"{t.page_content[:300]}\n\n"
         
-        # Generate enhanced synthesis with section-specific guidance
+        # Generate enhanced synthesis with section-specific guidance and web insights
         prompt = f"""Based on this comprehensive context, provide personalized chord progression recommendations.
 
 {context}
 
-IMPORTANT: The lyrics analysis includes an emotional arc and section-specific needs. Use this to provide:
+IMPORTANT: 
+- The lyrics analysis includes an emotional arc and section-specific needs
+- Use the web insights to match actual artist styles and current trends
+- Incorporate production techniques for actionable advice
+
+Provide:
 1. **Overall Progressions** that match the emotional journey
 2. **Section-Specific Suggestions** (different progressions for verse vs chorus vs bridge if applicable)
 3. **Emotional Peak Moments** - special chord treatments for high-intensity lines
+4. **Artist Style Connections** - how recommendations match reference artists' actual techniques
+5. **Production Tips** - how to voice and play these progressions
 
 For each recommendation:
 1. Progression name & chords (Roman numerals and actual chords in a key like C major)
 2. Which section(s) it works best for (verse/chorus/bridge) and why
 3. How it supports the emotional arc and storytelling
 4. Historical examples from famous songs
-5. Current artists using similar progressions
+5. Current artists using similar progressions (reference the web insights!)
 6. Brief music theory explanation
-7. Variations for different sections
+7. Production/voicing suggestions
+8. Variations for different sections
 
-If lyrics were analyzed, explicitly reference:
-- The emotional arc journey
-- Section-specific needs
-- Emotional peak moments and how to harmonize them
+If artist-specific insights are available, explicitly connect recommendations to those artists' songwriting techniques.
 
 Be conversational, actionable, and encouraging. Format with clear headers and sections."""
         
@@ -306,6 +388,7 @@ Be conversational, actionable, and encouraging. Format with clear headers and se
             "lyrics_analysis": {},
             "progressions": [],
             "current_examples": [],
+            "web_search_details": {},  # NEW: Structured web search results
             "theory_context": [],
             "final_synthesis": "",
             "messages": []

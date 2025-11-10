@@ -1,0 +1,1106 @@
+[
+  {
+    "progression_roman": "I - V - vi - IV",
+    "chords_example": "C - G - Am - F",
+    "frequency": "very_common",
+    "genres": "pop, rock, electronic, folk",
+    "mood": "happy, uplifting, optimistic",
+    "example_songs": "Jar of Hearts (Christina Perri), Love the way you lie (Rihanna), Someone like you (adele), living on a prayer (bon jovi)"
+  },
+  {
+    "progression_roman": "I - V - vi - iii - IV",
+    "chords_example": "C - G - Am - Em - F",
+    "frequency": "uncommon",
+    "genres": "Pop, Rock, Folk",
+    "mood": "heartbreak, longing, serenity, nostalgia, and bittersweet reflection",
+    "example_songs": "Cryin' (Aerosmith), The Fighter (Gym Class Heroes and Ryan Tedder), Firework (Katy Perry), A Day Like This (Spongebob Squarepants)"
+  },
+  {
+    "progression_roman": "vi - V - IV - V",
+    "chords_example": "Am - G - F - G",
+    "frequency": "very_common",
+    "genres": "Pop, Rock, Country",
+    "mood": "melancholy, longing, and eventual triumph or resolution",
+    "example_songs": "Rolling in the deep (adele), my heart will go on (Celine Dion), Girls just want to have fun (cyndi Lauper), Titanium feat Sia (David Guetta), Somebody that I used to know (gotye)"
+  },
+  {
+    "progression_roman": "I - vi - IV - V",
+    "chords_example": "C - Am - F - G",
+    "frequency": "common",
+    "genres": "pop, rock, R&B, ballads, turnarounds, folk",
+    "mood": "happy, hopeful, bittersweet, emotional, nostalgic, anthemic",
+    "example_songs": "Girl on Fire (alicia Keys), Complicated (Avril Lavigne), Stand by me (ben e king), boom clap (charli XCX) Lucky (Britney Spears), Baby (Justin Bieber) "
+  },
+  {
+    "progression_roman": "I - IV - vi - V",
+    "chords_example": "C - F - Am - G",
+    "frequency": "common",
+    "genres": "Pop, Indie, Rock, Hip Hop, R&B",
+    "mood": "bright, uplifting, and a little less predictable, often associated with pop, rock, and ballads",
+    "example_songs": "Break Free ft Zedd (Ariana Grande), Santa Tell Me (Ariana Grande), Summer of 69 (Bryan Adams), That's the way it is (Celine Dion), Home (Daughtry), Stone Cold (demi lovato)"
+  },
+  {
+    "progression_roman": "I - V - IV - V",
+    "chords_example": "C - G - F - G",
+    "frequency": "common",
+    "genres": "Rock, Blues, pop, country, folk",
+    "mood": "upbeat, familiar, and resolved mood",
+    "example_songs": "Take on Me (A-ha), Grenade (bruno mars), Everything I do (Bryan Adams), With you (Chris Brown), I'll make a man out of you (Disney), 21 guns (Greenday), your body is a wonderland (john mayer), stairway to heaven (led zeppelin)"
+  },
+  {
+    "progression_roman": "IV - ii - I6/4 - V - I",
+    "chords_example": "F - Dm - C/G - G - C",
+    "frequency": "common",
+    "genres": "classical, jazz, baroque, pop & rock",
+    "mood": "determined, majestic, and conclusive, with a powerful sense of finality",
+    "example_songs": "I don't want to miss a thing (Aerosmith), Dancing in the dark (bruce springsteen), when I was your man (bruno mars), a thousand years (christina perri), your song (elton john)"
+  },
+  {
+    "progression_roman": "I - V6 - vi - V",
+    "chords_example": "C - G/B - Am - G",
+    "frequency": "very_common",
+    "genres": "pop, rock, gospel",
+    "mood": "hopeful, bittersweet emotion or nostalgia",
+    "example_songs": "mamma mia (abba), this is what it feels like (armin van buuren), no woman no cry (bob marley), circus (britney spears), can you feel the love tonight (elton john), you're beautiful (james blunt) "
+  },
+  {
+    "progression_roman": "I - ii7 - I6 - IV",
+    "chords_example": "C - Dm7 - C/E - F",
+    "frequency": "not common",
+    "genres": "jazz, R&B, pop, soul, indie",
+    "mood": "sweet, flowing, and mellow with a gentle sense of motion",
+    "example_songs": "THe night is still young (nicki minaj), don't stop me now (queen), blackbird (the beatles), find you (zedd)"
+  },
+  {
+    "progression_roman": "I - iii6/4 - vi - IV",
+    "chords_example": "C - Em/B - Am - F",
+    "frequency": "not common",
+    "genres": "pop, punk, rock, indie, ballads, R&B, indie folk",
+    "mood": "creates a journey from stability to wistful longing. It begins on a cheerful note, takes a slightly reflective turn, and ends with a feeling of gentle, open resolution. bittersweet or sentimental, blending hope with a touch of melancholy. ",
+    "example_songs": "When we were young (Adele), when I was your man (bruno mars), someone like you (adele), thank you (dido), I can go the distance (disney), for the first time in forever (kristen bell & idina menzel) "
+  },
+  {
+    "progression_roman": "IV - I6 - V",
+    "chords_example": "F - C/E - G",
+    "frequency": "not common",
+    "genres": "rock, pop, R&B, folk, and country music",
+    "mood": "movement and anticipation toward a climactic resolution, uplifting, dynamic, or poignant",
+    "example_songs": "Fix you (coldplay), tiny dancer (elton john), ridin' solo (jason derulo), the heart of my life (john mayer), let me love you (ne-yo), somebody to love (queen)"
+  },
+  {
+    "progression_roman": "IV - I6 - ii",
+    "chords_example": "F - C/E - Dm",
+    "frequency": "not common",
+    "genres": "pop, rock, jazz, folk, singer-songwriter",
+    "mood": "smooth, moving, and introspective mood",
+    "example_songs": "bad day (daniel powter), thinking out loud (ed sheeran), congregation (foo fighters), let your hair down (MAGIC)"
+  },
+  {
+    "progression_roman": "I - IV - I - V",
+    "chords_example": "C - F - C - G",
+    "frequency": "common",
+    "genres": "folk,country",
+    "mood": "simple,traditional",
+    "example_songs": "This Land Is Your Land (Woody Guthrie), Amazing Grace (Traditional), You Are My Sunshine (Jimmie Davis)"
+  },
+  {
+    "progression_roman": "i - IV - VII - III",
+    "chords_example": "Am - D - G - B",
+    "frequency": "uncommon",
+    "genres": "edm, electronic, dance",
+    "mood": "mysterious, energetic",
+    "example_songs": "Wicked Game (Chris Isaak), Dark Horse (Katy Perry), Stay (Rihanna)"
+  },
+  {
+    "progression_roman": "I - iii - vi - IV",
+    "chords_example": "C - Em - Am - F",
+    "frequency": "common",
+    "genres": "pop,folk",
+    "mood": "hopeful,bright",
+    "example_songs": "I Will Follow You Into The Dark (Death Cab for Cutie), Someone Like You (Adele), The Reason (Hoobastank)"
+  },
+  {
+    "progression_roman": "I - V - IV",
+    "chords_example": "C - G - F",
+    "frequency": "very_common",
+    "genres": "rock,pop",
+    "mood": "energetic,uplifting",
+    "example_songs": "Brown Eyed Girl (Van Morrison), Stir It Up (Bob Marley), You Can't Always Get What You Want (The Rolling Stones)"
+  },
+  {
+    "progression_roman": "i - VI - VII",
+    "chords_example": "Am - F - G",
+    "frequency": "common",
+    "genres": "rock,grunge",
+    "mood": "dark,heavy",
+    "example_songs": "All Along The Watchtower (Jimi Hendrix), Zombie (The Cranberries)"
+  },
+  {
+    "progression_roman": "I - ii - IV - V",
+    "chords_example": "C - Dm - F - G",
+    "frequency": "common",
+    "genres": "jazz,pop",
+    "mood": "sophisticated,smooth",
+    "example_songs": "Autumn Leaves (Jazz Standard), Fly Me To The Moon (Frank Sinatra)"
+  },
+  {
+    "progression_roman": "I - bVII - IV",
+    "chords_example": "C - Bb - F",
+    "frequency": "common",
+    "genres": "rock,alternative",
+    "mood": "edgy,modern",
+    "example_songs": "Sweet Child O Mine (Guns N Roses), Sympathy For The Devil (Rolling Stones)"
+  },
+  {
+    "progression_roman": "vi - ii - V - I",
+    "chords_example": "Am - Dm - G - C",
+    "frequency": "common",
+    "genres": "pop,jazz",
+    "mood": "uplifting,romantic",
+    "example_songs": "One Love (Bob Marley), What a Wonderful World (Louis Armstrong), Can't Help Falling in Love (Elvis Presley)"
+  },
+  {
+    "progression_roman": "I - bIII - bVII - IV",
+    "chords_example": "C - Eb - Bb - F",
+    "frequency": "common",
+    "genres": "rock,indie",
+    "mood": "dramatic,anthemic",
+    "example_songs": "Wonderwall (Oasis), Mr Brightside (The Killers)"
+  },
+  {
+    "progression_roman": "i - bVII - bVI - bVII",
+    "chords_example": "Am - G - F - G",
+    "frequency": "common",
+    "genres": "rock,metal",
+    "mood": "heavy,powerful",
+    "example_songs": "Stairway To Heaven (Led Zeppelin), Still Loving You (Scorpions)"
+  },
+  {
+    "progression_roman": "I - vi - ii - V",
+    "chords_example": "C - Am - Dm - G",
+    "frequency": "very_common",
+    "genres": "pop,jazz",
+    "mood": "romantic,classic",
+    "example_songs": "Blue Moon (The Marcels), Heart and Soul (Hoagy Carmichael), Save the Last Dance for Me (The Drifters)"
+  },
+  {
+    "progression_roman": "vi - IV - V - iii",
+    "chords_example": "Am - F - G - Em",
+    "frequency": "common",
+    "genres": "indie,folk",
+    "mood": "melancholic,flowing",
+    "example_songs": "The Scientist (Coldplay), Skinny Love (Bon Iver)"
+  },
+  {
+    "progression_roman": "I - III - IV - iv",
+    "chords_example": "C - E - F - Fm",
+    "frequency": "uncommon",
+    "genres": "pop,jazz",
+    "mood": "surprising,colorful",
+    "example_songs": "Something (The Beatles), Blackbird (The Beatles)"
+  },
+  {
+    "progression_roman": "vi - V - IV - III",
+    "chords_example": "Am - G - F - E",
+    "frequency": "uncommon",
+    "genres": "rock,alternative",
+    "mood": "descending,dramatic",
+    "example_songs": "Stairway To Heaven intro (Led Zeppelin), While My Guitar Gently Weeps (The Beatles)"
+  },
+  {
+    "progression_roman": "i - iv - v",
+    "chords_example": "Am - Dm - Em",
+    "frequency": "common",
+    "genres": "blues,rock",
+    "mood": "dark,soulful",
+    "example_songs": "House of the Rising Sun (The Animals), Hit the Road Jack (Ray Charles), Walk on the Wild Side (Lou Reed)"
+  },
+  {
+    "progression_roman": "ii - V - i",
+    "chords_example": "Dm - G - Am",
+    "frequency": "common",
+    "genres": "jazz,latin",
+    "mood": "mysterious,romantic",
+    "example_songs": "Black Orpheus (Luiz Bonfá), The Girl from Ipanema (Stan Getz), How Insensitive (Antonio Carlos Jobim)"
+  },
+  {
+    "progression_roman": "IV - I - V",
+    "chords_example": "F - C - G",
+    "frequency": "common",
+    "genres": "country,folk",
+    "mood": "happy,nostalgic",
+    "example_songs": "Sweet Home Alabama (Lynyrd Skynyrd), Country Roads (John Denver), Good Riddance (Green Day)"
+  },
+  {
+    "progression_roman": "i - VI - III - VII",
+    "chords_example": "Am - F - C - G",
+    "frequency": "common",
+    "genres": "rock,metal",
+    "mood": "dark,epic",
+    "example_songs": "The Unforgiven (Metallica), Fade to Black (Metallica), Welcome Home (Sanitarium) (Metallica)"
+  },
+  {
+    "progression_roman": "IV - V - I",
+    "chords_example": "F - G - C",
+    "frequency": "common",
+    "genres": "rock,pop",
+    "mood": "triumphant,classic",
+    "example_songs": "I Want to Hold Your Hand (The Beatles), Be My Baby (The Ronettes), Sweet Caroline (Neil Diamond)"
+  },
+  {
+    "progression_roman": "i - VII - VI - V",
+    "chords_example": "Am - G - F - E",
+    "frequency": "common",
+    "genres": "rock,metal",
+    "mood": "dark,moody",
+    "example_songs": "Stairway to Heaven (Led Zeppelin), While My Guitar Gently Weeps (The Beatles), Hotel California (Eagles)"
+  },
+  {
+    "progression_roman": "vi - I - V",
+    "chords_example": "Am - C - G",
+    "frequency": "common",
+    "genres": "pop,folk",
+    "mood": "melancholic,bittersweet",
+    "example_songs": "Tears in Heaven (Eric Clapton), With or Without You (U2), No Woman, No Cry (Bob Marley)"
+  },
+  {
+    "progression_roman": "ii - IV - I",
+    "chords_example": "Dm - F - C",
+    "frequency": "uncommon",
+    "genres": "jazz,pop",
+    "mood": "relaxed,romantic",
+    "example_songs": "Just the Two of Us (Bill Withers), Isn't She Lovely (Stevie Wonder), Sir Duke (Stevie Wonder)"
+  },
+  {
+    "progression_roman": "iii - vi - ii - V",
+    "chords_example": "Em - Am - Dm - G",
+    "frequency": "common",
+    "genres": "jazz,pop",
+    "mood": "romantic,mellow",
+    "example_songs": "Careless Whisper (George Michael), Misty (Erroll Garner), The Way You Look Tonight (Frank Sinatra)"
+  },
+  {
+    "progression_roman": "i - iv - VII",
+    "chords_example": "Am - Dm - G",
+    "frequency": "common",
+    "genres": "rock,blues",
+    "mood": "dark,soulful",
+    "example_songs": "Riders on the Storm (The Doors), People Are Strange (The Doors), Knockin' on Heaven's Door (Bob Dylan)"
+  },
+  {
+    "progression_roman": "IV - V - vi - iii",
+    "chords_example": "F - G - Am - Em",
+    "frequency": "uncommon",
+    "genres": "pop,rock",
+    "mood": "emotional,dynamic",
+    "example_songs": "Every Breath You Take (The Police), With or Without You (U2), Let Her Go (Passenger)"
+  },
+  {
+    "progression_roman": "i - VI - III - VII - iv",
+    "chords_example": "Am - F - C - G - Dm",
+    "frequency": "uncommon",
+    "genres": "rock,metal",
+    "mood": "epic,dramatic",
+    "example_songs": "Nothing Else Matters (Metallica), One (Metallica), Fade to Black (Metallica)"
+  },
+  {
+    "progression_roman": "IV - V - iii - vi",
+    "chords_example": "F - G - Em - Am",
+    "frequency": "uncommon",
+    "genres": "pop,indie",
+    "mood": "bittersweet,hopeful",
+    "example_songs": "She Will Be Loved (Maroon 5), The Scientist (Coldplay), I'm Yours (Jason Mraz)"
+  },
+  {
+    "progression_roman": "vi - IV - V",
+    "chords_example": "Am - F - G",
+    "frequency": "common",
+    "genres": "pop,rock",
+    "mood": "hopeful,uplifting",
+    "example_songs": "With or Without You (U2), Let It Be (The Beatles), No Woman, No Cry (Bob Marley)"
+  },
+  {
+    "progression_roman": "ii - V - IV - I",
+    "chords_example": "Dm - G - F - C",
+    "frequency": "uncommon",
+    "genres": "jazz,pop",
+    "mood": "sophisticated,smooth",
+    "example_songs": "Georgia on My Mind (Ray Charles), Just the Way You Are (Billy Joel), My Funny Valentine (Frank Sinatra)"
+  },
+  {
+    "progression_roman": "I - ii - iii - IV",
+    "chords_example": "C - Dm - Em - F",
+    "frequency": "uncommon",
+    "genres": "pop,jazz",
+    "mood": "bright,optimistic",
+    "example_songs": "Ain't No Mountain High Enough (Marvin Gaye and Tammi Terrell), ABC (The Jackson 5), You Are the Sunshine of My Life (Stevie Wonder)"
+  },
+  {
+    "progression_roman": "i - vii° - III - VI",
+    "chords_example": "Am - Bdim - C - F",
+    "frequency": "uncommon",
+    "genres": "classical,rock",
+    "mood": "dark,mysterious",
+    "example_songs": "Symphony No. 5 (Beethoven), The Phantom of the Opera (Andrew Lloyd Webber), Creep (Radiohead)"
+  },
+  {
+    "progression_roman": "I - vi - IV - iii",
+    "chords_example": "C - Am - F - Em",
+    "frequency": "uncommon",
+    "genres": "pop,indie",
+    "mood": "bittersweet,emotional",
+    "example_songs": "The Reason (Hoobastank), She Will Be Loved (Maroon 5), Someone Like You (Adele)"
+  },
+  {
+    "progression_roman": "IV - I - vi - V",
+    "chords_example": "F - C - Am - G",
+    "frequency": "common",
+    "genres": "pop,rock",
+    "mood": "uplifting,anthemic",
+    "example_songs": "Sweet Child O' Mine (Guns N' Roses), Let It Be (The Beatles), No Woman, No Cry (Bob Marley)"
+  },
+  {
+    "progression_roman": "ii - IV - V",
+    "chords_example": "Dm - F - G",
+    "frequency": "uncommon",
+    "genres": "jazz,pop",
+    "mood": "sophisticated,playful",
+    "example_songs": "Moondance (Van Morrison), Wonderful Tonight (Eric Clapton), Just the Way You Are (Billy Joel)"
+  },
+  {
+    "progression_roman": "vi - I - IV - V",
+    "chords_example": "Am - C - F - G",
+    "frequency": "common",
+    "genres": "pop,folk",
+    "mood": "uplifting,hopeful",
+    "example_songs": "Brown Eyed Girl (Van Morrison), Stand By Me (Ben E. King), Every Breath You Take (The Police)"
+  },
+  {
+    "progression_roman": "i - VII - VI - iv",
+    "chords_example": "Am - G - F - Dm",
+    "frequency": "uncommon",
+    "genres": "rock,metal",
+    "mood": "dark,moody",
+    "example_songs": "Fade to Black (Metallica), The Unforgiven (Metallica), Welcome Home (Sanitarium) (Metallica)"
+  },
+  {
+    "progression_roman": "IV - V - vi - I",
+    "chords_example": "F - G - Am - C",
+    "frequency": "common",
+    "genres": "pop,rock",
+    "mood": "hopeful,uplifting",
+    "example_songs": "With Arms Wide Open (Creed), Every Breath You Take (The Police), Let It Be (The Beatles)"
+  },
+  {
+    "progression_roman": "iii - vi - IV - I",
+    "chords_example": "Em - Am - F - C",
+    "frequency": "uncommon",
+    "genres": "pop,rock",
+    "mood": "emotional,hopeful",
+    "example_songs": "The Scientist (Coldplay), She Will Be Loved (Maroon 5), Apologize (OneRepublic)"
+  },
+  {
+    "progression_roman": "ii - V - iii - vi",
+    "chords_example": "Dm - G - Em - Am",
+    "frequency": "uncommon",
+    "genres": "jazz,pop",
+    "mood": "melancholic,reflective",
+    "example_songs": "Autumn Leaves (Nat King Cole), My Funny Valentine (Frank Sinatra), Blue Skies (Ella Fitzgerald)"
+  },
+  {
+    "progression_roman": "vi - IV - iii - ii",
+    "chords_example": "Am - F - Em - Dm",
+    "frequency": "uncommon",
+    "genres": "pop,indie",
+    "mood": "melancholic,thoughtful",
+    "example_songs": "Fix You (Coldplay), With or Without You (U2), Someone Like You (Adele)"
+  },
+  {
+    "progression_roman": "I - ii - V - I",
+    "chords_example": "C - Dm - G - C",
+    "frequency": "common",
+    "genres": "jazz,pop",
+    "mood": "classic,romantic",
+    "example_songs": "The Way You Look Tonight (Frank Sinatra), All of Me (John Legend), Just the Way You Are (Billy Joel)"
+  },
+  {
+    "progression_roman": "IV - I - V - vi",
+    "chords_example": "F - C - G - Am",
+    "frequency": "uncommon",
+    "genres": "pop,rock",
+    "mood": "uplifting,emotional",
+    "example_songs": "What Makes You Beautiful (One Direction), Sweet Child O' Mine (Guns N' Roses), Let It Be (The Beatles)"
+  },
+  {
+    "progression_roman": "ii - IV - I - V",
+    "chords_example": "Dm - F - C - G",
+    "frequency": "uncommon",
+    "genres": "jazz,pop",
+    "mood": "smooth,romantic",
+    "example_songs": "Georgia on My Mind (Ray Charles), Just the Way You Are (Billy Joel), The Girl from Ipanema (Stan Getz)"
+  },
+  {
+    "progression_roman": "i - v - VI - III",
+    "chords_example": "Am - Em - F - C",
+    "frequency": "uncommon",
+    "genres": "alternative, rock",
+    "mood": "melancholic, reflective",
+    "example_songs": "Exit Music (For a Film) (Radiohead), Hurt (Nine Inch Nails), Mad World (Tears for Fears)"
+  },
+  {
+    "progression_roman": "i - iv - v - i",
+    "chords_example": "Am - Dm - Em - Am",
+    "frequency": "common",
+    "genres": "metal, punk",
+    "mood": "aggressive, gritty",
+    "example_songs": "Seek & Destroy (Metallica), Anarchy in the UK (Sex Pistols), Breaking the Law (Judas Priest)"
+  },
+  {
+    "progression_roman": "vi - I - V - IV",
+    "chords_example": "Am - C - G - F",
+    "frequency": "common",
+    "genres": "pop, rock",
+    "mood": "uplifting, hopeful",
+    "example_songs": "With Or Without You (U2), Africa (Toto), If I Were A Boy (Beyoncé)"
+  },
+  {
+    "progression_roman": "IV - iii - ii - I",
+    "chords_example": "F - Em - Dm - C",
+    "frequency": "uncommon",
+    "genres": "pop, indie",
+    "mood": "melancholic, dreamy",
+    "example_songs": "Sitting, Waiting, Wishing (Jack Johnson), The Scientist (Coldplay)"
+  },
+  {
+    "progression_roman": "V - IV - I - vi",
+    "chords_example": "G - F - C - Am",
+    "frequency": "common",
+    "genres": "rock, pop",
+    "mood": "energetic, anthemic",
+    "example_songs": "Sweet Child o' Mine (Guns N' Roses), Free Fallin' (Tom Petty)"
+  },
+  {
+    "progression_roman": "ii - I - V - IV",
+    "chords_example": "Dm - C - G - F",
+    "frequency": "uncommon",
+    "genres": "indie, pop",
+    "mood": "reflective, gentle",
+    "example_songs": "I See Fire (Ed Sheeran), All of Me (John Legend)"
+  },
+  {
+    "progression_roman": "vi - IV - I - iii",
+    "chords_example": "Am - F - C - Em",
+    "frequency": "common",
+    "genres": "pop, indie",
+    "mood": "uplifting, hopeful",
+    "example_songs": "She Will Be Loved (Maroon 5), Demons (Imagine Dragons)"
+  },
+  {
+    "progression_roman": "I - iii - IV - V",
+    "chords_example": "C - Em - F - G",
+    "frequency": "common",
+    "genres": "pop, rock",
+    "mood": "bright, optimistic",
+    "example_songs": "Oh Pretty Woman (Roy Orbison), Runaway (The Corrs)"
+  },
+  {
+    "progression_roman": "ii - V - I - vi",
+    "chords_example": "Dm - G - C - Am",
+    "frequency": "uncommon",
+    "genres": "jazz, pop",
+    "mood": "smooth, relaxed",
+    "example_songs": "Autumn Leaves (Eric Clapton), Jazz Standard (Various)"
+  },
+  {
+    "progression_roman": "V - I - IV - I",
+    "chords_example": "G - C - F - C",
+    "frequency": "common",
+    "genres": "rock, pop",
+    "mood": "energetic, classic",
+    "example_songs": "Louie Louie (The Kingsmen), Hang On Sloopy (The McCoys)"
+  },
+  {
+    "progression_roman": "vi - V - IV - I",
+    "chords_example": "Am - G - F - C",
+    "frequency": "common",
+    "genres": "pop, indie",
+    "mood": "melancholic, hopeful",
+    "example_songs": "Someone Like You (Adele), The Scientist (Coldplay)"
+  },
+  {
+    "progression_roman": "ii - IV - I - vi",
+    "chords_example": "Dm - F - C - Am",
+    "frequency": "uncommon",
+    "genres": "indie, pop",
+    "mood": "reflective, soft",
+    "example_songs": "All of Me (John Legend), Skinny Love (Bon Iver)"
+  },
+  {
+    "progression_roman": "iii - IV - I - V",
+    "chords_example": "Em - F - C - G",
+    "frequency": "uncommon",
+    "genres": "rock, pop",
+    "mood": "epic, bright",
+    "example_songs": "The Final Countdown (Europe), Don't Stop (Fleetwood Mac)"
+  },
+  {
+    "progression_roman": "IV - vi - V - I",
+    "chords_example": "F - Am - G - C",
+    "frequency": "common",
+    "genres": "pop, rock",
+    "mood": "uplifting, energetic",
+    "example_songs": "Every Breath You Take (The Police), Stand By Me (Ben E. King)"
+  },
+  {
+    "progression_roman": "ii - V - iii - I",
+    "chords_example": "Dm - G - Em - C",
+    "frequency": "uncommon",
+    "genres": "jazz, pop",
+    "mood": "smooth, jazzy",
+    "example_songs": "Jazz Standard (Various), L-O-V-E (Nat King Cole)"
+  },
+  {
+    "progression_roman": "V - vi - IV - I",
+    "chords_example": "G - Am - F - C",
+    "frequency": "common",
+    "genres": "pop, rock",
+    "mood": "bright, hopeful",
+    "example_songs": "Graduation (Vitamin C), Good Riddance (Green Day)"
+  },
+  {
+    "progression_roman": "IV - iii - vi - I",
+    "chords_example": "F - Em - Am - C",
+    "frequency": "uncommon",
+    "genres": "pop, indie",
+    "mood": "melancholic, reflective",
+    "example_songs": "The Night We Met (Lord Huron), The Scientist (Coldplay)"
+  },
+  {
+    "progression_roman": "iii - I - IV - V",
+    "chords_example": "Em - C - F - G",
+    "frequency": "uncommon",
+    "genres": "rock, pop",
+    "mood": "bright, uplifting",
+    "example_songs": "Take It Easy (Eagles), I'm A Believer (The Monkees)"
+  },
+  {
+    "progression_roman": "I - V - ii - IV",
+    "chords_example": "C - G - Dm - F",
+    "frequency": "uncommon",
+    "genres": "pop, rock",
+    "mood": "uplifting, hopeful",
+    "example_songs": "Perfect (Ed Sheeran), Hello (Lionel Richie)"
+  },
+  {
+    "progression_roman": "vi - IV - I - V",
+    "chords_example": "Am - F - C - G",
+    "frequency": "very_common",
+    "genres": "indie, folk",
+    "mood": "melancholic, introspective",
+    "example_songs": "Skinny Love (Bon Iver), Let Her Go (Passenger), All I Want (Kodaline)"
+  },
+  {
+    "progression_roman": "vi - ii - IV - V",
+    "chords_example": "Am - Dm - F - G",
+    "frequency": "uncommon",
+    "genres": "indie, pop",
+    "mood": "reflective, longing",
+    "example_songs": "Iris (Goo Goo Dolls), I'll Follow You Into The Dark (Death Cab for Cutie), The Night We Met (Lord Huron)"
+  },
+  {
+    "progression_roman": "ii - vi - IV - I",
+    "chords_example": "Dm - Am - F - C",
+    "frequency": "uncommon",
+    "genres": "folk, indie",
+    "mood": "serene, peaceful",
+    "example_songs": "Father And Son (Cat Stevens), The Sound Of Silence (Simon & Garfunkel), The Boxer (Simon & Garfunkel)"
+  },
+  {
+    "progression_roman": "vi - IV - V - I",
+    "chords_example": "Am - F - G - C",
+    "frequency": "common",
+    "genres": "indie, folk",
+    "mood": "hopeful, uplifting",
+    "example_songs": "Hey, Soul Sister (Train), The Story (Brandi Carlile), Riptide (Vance Joy)"
+  },
+  {
+    "progression_roman": "i - v - IV - VI",
+    "chords_example": "Am - Em - F - C",
+    "frequency": "uncommon",
+    "genres": "alternative, indie",
+    "mood": "moody, introspective",
+    "example_songs": "Love Will Tear Us Apart (Joy Division), How Soon Is Now? (The Smiths), The Killing Moon (Echo & The Bunnymen)"
+  },
+  {
+    "progression_roman": "ii - V - I - IV",
+    "chords_example": "Dm - G - C - F",
+    "frequency": "uncommon",
+    "genres": "jazz, indie",
+    "mood": "smooth, sophisticated",
+    "example_songs": "Fly Me To The Moon (Frank Sinatra), All The Things You Are (Ella Fitzgerald), Autumn Leaves (Chet Baker)"
+  },
+  {
+    "progression_roman": "vi - ii - I - V",
+    "chords_example": "Am - Dm - C - G",
+    "frequency": "uncommon",
+    "genres": "indie, folk",
+    "mood": "introspective, nostalgic",
+    "example_songs": "Home (Phillip Phillips), The Only Exception (Paramore), Heartbeats (José González)"
+  },
+  {
+    "progression_roman": "IV - I - V - ii",
+    "chords_example": "F - C - G - Dm",
+    "frequency": "uncommon",
+    "genres": "folk, indie",
+    "mood": "peaceful, serene",
+    "example_songs": "Heartbeats (José González), The Sound Of Silence (Simon & Garfunkel), The Boxer (Simon & Garfunkel)"
+  },
+  {
+    "progression_roman": "vi - V - I - IV",
+    "chords_example": "Am - G - C - F",
+    "frequency": "common",
+    "genres": "indie, folk",
+    "mood": "hopeful, uplifting",
+    "example_songs": "Budapest (George Ezra), Ho Hey (The Lumineers), Little Talks (Of Monsters and Men)"
+  },
+  {
+    "progression_roman": "i - VI - VII - iv",
+    "chords_example": "Am - F - G - Dm",
+    "frequency": "uncommon",
+    "genres": "alternative, rock",
+    "mood": "dark, introspective",
+    "example_songs": "Space Oddity (David Bowie), Creep (Radiohead), Hurt (Nine Inch Nails)"
+  },
+  {
+    "progression_roman": "ii - IV - V - I",
+    "chords_example": "Dm - F - G - C",
+    "frequency": "uncommon",
+    "genres": "indie, folk",
+    "mood": "bright, hopeful",
+    "example_songs": "Let It Be (The Beatles), Blackbird (The Beatles), Norwegian Wood (The Beatles)"
+  },
+  {
+    "progression_roman": "IV - vi - V - iii",
+    "chords_example": "F - Am - G - Em",
+    "frequency": "uncommon",
+    "genres": "indie, alternative",
+    "mood": "introspective, wistful",
+    "example_songs": "Banana Pancakes (Jack Johnson), The A Team (Ed Sheeran), Take Me To Church (Hozier)"
+  },
+  {
+    "progression_roman": "I - vi - ii - IV",
+    "chords_example": "C - Am - Dm - F",
+    "frequency": "common",
+    "genres": "jazz, soul",
+    "mood": "sophisticated, smooth",
+    "example_songs": "Just The Two Of Us (Bill Withers), Can't Help Falling In Love (Elvis Presley), Something (The Beatles)"
+  },
+  {
+    "progression_roman": "I - IV - ii - V",
+    "chords_example": "C - F - Dm - G",
+    "frequency": "common",
+    "genres": "jazz, blues",
+    "mood": "sophisticated, smooth",
+    "example_songs": "Don't Get Around Much Anymore (Duke Ellington), Route 66 (Nat King Cole), Satin Doll (Duke Ellington)"
+  },
+  {
+    "progression_roman": "vi - IV - ii - V",
+    "chords_example": "Am - F - Dm - G",
+    "frequency": "uncommon",
+    "genres": "soul, jazz",
+    "mood": "soulful, smooth",
+    "example_songs": "Ain't No Sunshine (Bill Withers), Let's Get It On (Marvin Gaye), Lovely Day (Bill Withers)"
+  },
+  {
+    "progression_roman": "I - iii - ii - V",
+    "chords_example": "C - Em - Dm - G",
+    "frequency": "uncommon",
+    "genres": "jazz, blues",
+    "mood": "sophisticated, smooth",
+    "example_songs": "All The Things You Are (Jerome Kern), It Could Happen To You (Jimmy Van Heusen), My Funny Valentine (Rodgers & Hart)"
+  },
+  {
+    "progression_roman": "IV - V - I - vi",
+    "chords_example": "F - G - C - Am",
+    "frequency": "common",
+    "genres": "soul, jazz",
+    "mood": "smooth, sophisticated",
+    "example_songs": "Under the Boardwalk (The Drifters), The Tracks of My Tears (Smokey Robinson & The Miracles), I'll Be There (The Jackson 5)"
+  },
+  {
+    "progression_roman": "vi - iii - IV - I",
+    "chords_example": "Am - Em - F - C",
+    "frequency": "common",
+    "genres": "soul, jazz",
+    "mood": "soulful, smooth",
+    "example_songs": "Ain't No Mountain High Enough (Marvin Gaye & Tammi Terrell), You Are the Sunshine of My Life (Stevie Wonder), I Say a Little Prayer (Aretha Franklin)"
+  },
+  {
+    "progression_roman": "ii - I - IV - V",
+    "chords_example": "Dm - C - F - G",
+    "frequency": "uncommon",
+    "genres": "jazz, soul",
+    "mood": "sophisticated, smooth",
+    "example_songs": "On Broadway (George Benson), This Masquerade (George Benson), The Way You Look Tonight (Frank Sinatra)"
+  },
+  {
+    "progression_roman": "vi - V - ii - I",
+    "chords_example": "Am - G - Dm - C",
+    "frequency": "uncommon",
+    "genres": "soul, jazz",
+    "mood": "soulful, smooth",
+    "example_songs": "You Send Me (Sam Cooke), Ain't Too Proud to Beg (The Temptations), How Sweet It Is (To Be Loved by You) (Marvin Gaye)"
+  },
+  {
+    "progression_roman": "I - vi - IV - ii",
+    "chords_example": "C - Am - F - Dm",
+    "frequency": "uncommon",
+    "genres": "jazz, blues",
+    "mood": "sophisticated, smooth",
+    "example_songs": "Misty (Erroll Garner), Stardust (Hoagy Carmichael), The Nearness of You (Hoagy Carmichael)"
+  },
+  {
+    "progression_roman": "IV - I - ii - V",
+    "chords_example": "F - C - Dm - G",
+    "frequency": "common",
+    "genres": "jazz, soul",
+    "mood": "smooth, sophisticated",
+    "example_songs": "Fever (Peggy Lee), Cry Me a River (Julie London), God Bless the Child (Billie Holiday)"
+  },
+  {
+    "progression_roman": "i - bVI - bVII - i",
+    "chords_example": "Am - F - G - Am",
+    "frequency": "common",
+    "genres": "metal, punk",
+    "mood": "dark, intense",
+    "example_songs": "Paranoid (Black Sabbath), Blitzkrieg Bop (Ramones), Smells Like Teen Spirit (Nirvana)"
+  },
+  {
+    "progression_roman": "bVI - bVII - I - i",
+    "chords_example": "F - G - C - Am",
+    "frequency": "uncommon",
+    "genres": "metal, rock",
+    "mood": "dark, triumphant",
+    "example_songs": "Symphony of Destruction (Megadeth), For Whom The Bell Tolls (Metallica), Numb (Linkin Park)"
+  },
+  {
+    "progression_roman": "i - III - VII - iv",
+    "chords_example": "Am - C - G - Dm",
+    "frequency": "uncommon",
+    "genres": "metal, punk",
+    "mood": "urgent, rebellious",
+    "example_songs": "Master of Puppets (Metallica), Basket Case (Green Day), Holiday (Green Day)"
+  },
+  {
+    "progression_roman": "i - V - VI - VII",
+    "chords_example": "Am - E - F - G",
+    "frequency": "common",
+    "genres": "punk, metal",
+    "mood": "dark, driving",
+    "example_songs": "Iron Man (Black Sabbath), Blitzkrieg Bop (Ramones), Crazy Train (Ozzy Osbourne)"
+  },
+  {
+    "progression_roman": "i - iv - v - iv",
+    "chords_example": "Am - Dm - Em - Dm",
+    "frequency": "uncommon",
+    "genres": "metal, punk",
+    "mood": "aggressive, raw",
+    "example_songs": "Breaking the Law (Judas Priest), Ace of Spades (Motörhead), Killing in the Name (Rage Against the Machine)"
+  },
+  {
+    "progression_roman": "bVII - IV - I - V",
+    "chords_example": "G - D - A - E",
+    "frequency": "uncommon",
+    "genres": "rock, metal",
+    "mood": "anthemic, bold",
+    "example_songs": "All Along the Watchtower (Jimi Hendrix), Fortunate Son (Creedence Clearwater Revival), Sweet Child o' Mine (Guns N' Roses)"
+  },
+  {
+    "progression_roman": "i - VII - iv - VI",
+    "chords_example": "Am - G - Dm - F",
+    "frequency": "uncommon",
+    "genres": "metal, punk",
+    "mood": "brooding, intense",
+    "example_songs": "Enter Sandman (Metallica), Hallowed Be Thy Name (Iron Maiden), Holiday (Green Day)"
+  },
+  {
+    "progression_roman": "IV - I - bVII - I",
+    "chords_example": "F - C - Bb - C",
+    "frequency": "uncommon",
+    "genres": "hard rock, metal",
+    "mood": "bold, powerful",
+    "example_songs": "Thunderstruck (AC/DC), Livin' on a Prayer (Bon Jovi), Sweet Emotion (Aerosmith)"
+  },
+  {
+    "progression_roman": "i - bIII - iv - v",
+    "chords_example": "Am - C - Dm - Em",
+    "frequency": "uncommon",
+    "genres": "rock, metal",
+    "mood": "dark, driving",
+    "example_songs": "Paranoid (Black Sabbath), Run to the Hills (Iron Maiden), Fade to Black (Metallica)"
+  },
+  {
+    "progression_roman": "I - bVII - IV - V",
+    "chords_example": "C - Bb - F - G",
+    "frequency": "common",
+    "genres": "rock, hard rock",
+    "mood": "anthemic, energetic",
+    "example_songs": "Proud Mary (Creedence Clearwater Revival), Sweet Child o' Mine (Guns N' Roses), Rock You Like a Hurricane (Scorpions)"
+  },
+  {
+    "progression_roman": "i - ii° - V - I",
+    "chords_example": "Am - Bdim - E - A",
+    "frequency": "uncommon",
+    "genres": "metal, hard rock",
+    "mood": "dark, intense",
+    "example_songs": "The Trooper (Iron Maiden), Run to the Hills (Iron Maiden), Painkiller (Judas Priest)"
+  },
+  {
+    "progression_roman": "bVI - V - i - iv",
+    "chords_example": "F - E - Am - Dm",
+    "frequency": "uncommon",
+    "genres": "metal, punk",
+    "mood": "aggressive, somber",
+    "example_songs": "Holy Wars... The Punishment Due (Megadeth), Fear of the Dark (Iron Maiden), Holiday (Green Day)"
+  },
+  {
+    "progression_roman": "i - III - VI - VII",
+    "chords_example": "Am - C - F - G",
+    "frequency": "uncommon",
+    "genres": "metal, punk",
+    "mood": "urgent, aggressive",
+    "example_songs": "Battery (Metallica), Blitzkrieg Bop (Ramones), Holiday (Green Day)"
+  },
+  {
+    "progression_roman": "bVII - I - IV - V",
+    "chords_example": "G - C - F - G",
+    "frequency": "uncommon",
+    "genres": "punk, rock",
+    "mood": "energetic, rebellious",
+    "example_songs": "I Wanna Be Sedated (Ramones), Blitzkrieg Bop (Ramones), Smells Like Teen Spirit (Nirvana)"
+  },
+  {
+    "progression_roman": "I - vi - iii - IV",
+    "chords_example": "C - Am - Em - F",
+    "frequency": "uncommon",
+    "genres": "folk, country",
+    "mood": "tender, reflective",
+    "example_songs": "Fire and Rain (James Taylor), All of Me (John Legend), Wonderful Tonight (Eric Clapton)"
+  },
+  {
+    "progression_roman": "I - V - IV - I",
+    "chords_example": "C - G - F - C",
+    "frequency": "very_common",
+    "genres": "folk, americana",
+    "mood": "uplifting, warm",
+    "example_songs": "This Land Is Your Land (Woody Guthrie), Twist and Shout (The Beatles), You Can't Always Get What You Want (The Rolling Stones)"
+  },
+  {
+    "progression_roman": "I - ii - vi - V",
+    "chords_example": "C - Dm - Am - G",
+    "frequency": "common",
+    "genres": "americana, country",
+    "mood": "nostalgic, warm",
+    "example_songs": "Let It Be (The Beatles), The Long and Winding Road (The Beatles), You've Got a Friend (James Taylor)"
+  },
+  {
+    "progression_roman": "IV - vi - I - V",
+    "chords_example": "F - Am - C - G",
+    "frequency": "uncommon",
+    "genres": "folk, country",
+    "mood": "hopeful, peaceful",
+    "example_songs": "Blackbird (The Beatles), Wild Horses (The Rolling Stones), The Scientist (Coldplay)"
+  },
+  {
+    "progression_roman": "I - IV - ii - vi",
+    "chords_example": "C - F - Dm - Am",
+    "frequency": "uncommon",
+    "genres": "americana, folk",
+    "mood": "reflective, heartfelt",
+    "example_songs": "Bridge Over Troubled Water (Simon & Garfunkel), Don't Think Twice, It's All Right (Bob Dylan), Your Song (Elton John)"
+  },
+  {
+    "progression_roman": "iii - V - vi - IV",
+    "chords_example": "Em - G - Am - F",
+    "frequency": "uncommon",
+    "genres": "edm, pop, dance",
+    "mood": "melancholic, driving",
+    "example_songs": "Wake Me Up (Avicii), Stay (Zedd), Heroes (Alesso)"
+  },
+  {
+    "progression_roman": "ii - vi - V - I",
+    "chords_example": "Dm - Am - G - C",
+    "frequency": "uncommon",
+    "genres": "jazz, electronic, dance",
+    "mood": "smooth, sophisticated",
+    "example_songs": "Autumn Leaves (Miles Davis), Blue Bossa (Kenny Dorham), So What (Miles Davis)"
+  },
+  {
+    "progression_roman": "i - V - i - VI",
+    "chords_example": "Am - E - Am - F",
+    "frequency": "uncommon",
+    "genres": "edm, electronic, dance",
+    "mood": "dramatic, atmospheric",
+    "example_songs": "Rolling In The Deep (Adele), Wicked Game (Chris Isaak), Stay (Rihanna)"
+  },
+  {
+    "progression_roman": "ii - I - V - vi",
+    "chords_example": "Dm - C - G - Am",
+    "frequency": "uncommon",
+    "genres": "r&b, hip hop",
+    "mood": "smooth, romantic",
+    "example_songs": "Confessions Part II (Usher), The Zone (The Weeknd), In My Mind (BJ the Chicago Kid)"
+  },
+  {
+    "progression_roman": "ii - V - bVI - I",
+    "chords_example": "Dm - G - Ab - C",
+    "frequency": "uncommon",
+    "genres": "neo-soul, jazz",
+    "mood": "groovy, sophisticated",
+    "example_songs": "Waterfalls (TLC), Ascension (Maxwell), Brown Sugar (D'Angelo)"
+  },
+  {
+    "progression_roman": "vi - IV - I - ii",
+    "chords_example": "Am - F - C - Dm",
+    "frequency": "common",
+    "genres": "r&b, pop",
+    "mood": "romantic, heartfelt",
+    "example_songs": "Love (Musiq Soulchild), Ordinary People (John Legend), We Belong Together (Mariah Carey)"
+  },
+  {
+    "progression_roman": "bVI - V - IV - I",
+    "chords_example": "Ab - G - F - C",
+    "frequency": "uncommon",
+    "genres": "r&b, neo-soul",
+    "mood": "sophisticated, groovy",
+    "example_songs": "Superstition (Stevie Wonder), Love Will Never Do (Without You) (Janet Jackson), Just the Two of Us (Bill Withers)"
+  },
+  {
+    "progression_roman": "I - V - bVII - IV",
+    "chords_example": "C - G - Bb - F",
+    "frequency": "common",
+    "genres": "hip hop, r&b",
+    "mood": "groovy, smooth",
+    "example_songs": "Hotline Bling (Drake), Can't Feel My Face (The Weeknd), One Dance (Drake)"
+  },
+  {
+    "progression_roman": "bVII - I - V - IV",
+    "chords_example": "Bb - C - G - F",
+    "frequency": "uncommon",
+    "genres": "r&b, hip hop",
+    "mood": "smooth, laid-back",
+    "example_songs": "Sugar (Maroon 5), Lose Yourself to Dance (Daft Punk), Senorita (Justin Timberlake)"
+  },
+  {
+    "progression_roman": "iii - vi - IV - V",
+    "chords_example": "Em - Am - F - G",
+    "frequency": "common",
+    "genres": "r&b, pop",
+    "mood": "romantic, uplifting",
+    "example_songs": "I Can't Help It (Michael Jackson), If I Ever Fall in Love (Shai), Weak (SWV)"
+  },
+  {
+    "progression_roman": "vi - bVII - I - V",
+    "chords_example": "Am - Bb - C - G",
+    "frequency": "uncommon",
+    "genres": "neo-soul, r&b",
+    "mood": "groovy, smooth",
+    "example_songs": "Lady (D'Angelo), Tell Me (Groove Theory), Sometimes (Bilal)"
+  },
+  {
+    "progression_roman": "IV - I - bIII - VII",
+    "chords_example": "F - C - Eb - Bb",
+    "frequency": "uncommon",
+    "genres": "experimental, alternative",
+    "mood": "complex, surprising",
+    "example_songs": "Pyramid Song (Radiohead), Everything In Its Right Place (Radiohead)"
+  },
+  {
+    "progression_roman": "I - ii - iii - bVI",
+    "chords_example": "C - Dm - Em - Ab",
+    "frequency": "uncommon",
+    "genres": "progressive, jazz",
+    "mood": "unconventional, intricate",
+    "example_songs": "Take Five (Dave Brubeck), Blue Rondo a la Turk (Dave Brubeck)"
+  },
+  {
+    "progression_roman": "i - iv - i - VI",
+    "chords_example": "Am - Dm - Am - F",
+    "frequency": "common",
+    "genres": "experimental, alternative",
+    "mood": "melancholic, unconventional",
+    "example_songs": "Creep (Radiohead), No Surprises (Radiohead)"
+  },
+  {
+    "progression_roman": "ii - bVII - bVI - V",
+    "chords_example": "Dm - Bb - Ab - G",
+    "frequency": "uncommon",
+    "genres": "experimental, jazz",
+    "mood": "surprising, dark",
+    "example_songs": "Freedom Jazz Dance (Miles Davis), Footprints (Wayne Shorter)"
+  },
+  {
+    "progression_roman": "V - bVI - i - bVII",
+    "chords_example": "G - Ab - Am - Bb",
+    "frequency": "uncommon",
+    "genres": "progressive, avant-garde",
+    "mood": "complex, epic",
+    "example_songs": "21st Century Schizoid Man (King Crimson), Larks' Tongues In Aspic (King Crimson)"
+  },
+  {
+    "progression_roman": "i - bVII - VI - V",
+    "chords_example": "Am - G - F - E",
+    "frequency": "uncommon",
+    "genres": "rock, experimental",
+    "mood": "dark, epic",
+    "example_songs": "While My Guitar Gently Weeps (The Beatles), Stairway To Heaven (Led Zeppelin)"
+  },
+  {
+    "progression_roman": "IV - bVII - I - V",
+    "chords_example": "F - Bb - C - G",
+    "frequency": "uncommon",
+    "genres": "experimental, progressive",
+    "mood": "unconventional, uplifting",
+    "example_songs": "The National Anthem (Radiohead), Paranoid Android (Radiohead)"
+  },
+  {
+    "progression_roman": "bIII - bVI - bVII - i",
+    "chords_example": "Eb - Ab - Bb - Am",
+    "frequency": "uncommon",
+    "genres": "avant-garde, experimental",
+    "mood": "surprising, complex",
+    "example_songs": "Moonchild (King Crimson), Lizard (King Crimson)"
+  },
+  {
+    "progression_roman": "bVII - IV - I - bVI",
+    "chords_example": "Bb - F - C - Ab",
+    "frequency": "uncommon",
+    "genres": "experimental, alternative",
+    "mood": "dark, unconventional",
+    "example_songs": "The Great Gig In The Sky (Pink Floyd), Us and Them (Pink Floyd)"
+  },
+  {
+    "progression_roman": "V - I - bVII - IV",
+    "chords_example": "G - C - Bb - F",
+    "frequency": "uncommon",
+    "genres": "progressive, avant-garde",
+    "mood": "intricate, epic",
+    "example_songs": "Roundabout (Yes), Close to the Edge (Yes)"
+  },
+  {
+    "progression_roman": "bVI - III - bVII - V",
+    "chords_example": "Ab - E - Bb - G",
+    "frequency": "uncommon",
+    "genres": "experimental, jazz",
+    "mood": "complex, unconventional",
+    "example_songs": "Lennie's Pennies (Lennie Tristano), Giant Steps (John Coltrane)"
+  },
+  {
+    "progression_roman": "IV - bVII - bIII - I",
+    "chords_example": "F - Bb - Eb - C",
+    "frequency": "uncommon",
+    "genres": "progressive, experimental",
+    "mood": "surprising, intricate",
+    "example_songs": "Firth of Fifth (Genesis), Supper's Ready (Genesis)"
+  }
+]

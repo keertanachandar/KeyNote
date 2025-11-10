@@ -2,6 +2,7 @@ from langchain_community.vectorstores import Qdrant
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.documents import Document
 import pandas as pd
+import json
 import os
 from dotenv import load_dotenv
 from pathlib import Path
@@ -15,7 +16,15 @@ VECTORSTORE_DIR = Path("./vectorstore")
 VECTORSTORE_DIR.mkdir(parents=True, exist_ok=True)
 
 class ChordProgressionRAG:
-    def __init__(self, pdf_chunks, progressions_csv_path, use_persistent_storage=False):
+    def __init__(self, pdf_chunks, progressions_path, use_persistent_storage=False):
+        """
+        Initialize the RAG system with PDF chunks and chord progressions.
+        
+        Args:
+            pdf_chunks: List of PDF document chunks
+            progressions_path: Path to progressions file (supports .csv or .json)
+            use_persistent_storage: Whether to use persistent storage (currently disabled)
+        """
         print("\n🎵 Initializing KeyNote RAG with Qdrant...")
         
         self.embeddings = OpenAIEmbeddings(
@@ -30,15 +39,46 @@ class ChordProgressionRAG:
         # Create or load PDF vectorstore
         self.pdf_vectorstore = self._initialize_pdf_vectorstore(pdf_chunks)
         
-        # Load progression data
+        # Load progression data (supports both CSV and JSON)
         print("🎸 Loading progression database...")
-        self.progressions_df = pd.read_csv(progressions_csv_path)
-        print(f"   ✓ Loaded {len(self.progressions_df)} progressions")
+        self.progressions_data = self._load_progressions(progressions_path)
+        print(f"   ✓ Loaded {len(self.progressions_data)} progressions")
         
         # Create or load progression vectorstore
         self.progression_vectorstore = self._initialize_progression_vectorstore()
         
         print("✓ KeyNote RAG ready!\n")
+    
+    def _load_progressions(self, progressions_path):
+        """
+        Load progressions from either CSV or JSON file.
+        
+        Args:
+            progressions_path: Path to the progressions file (.csv or .json)
+            
+        Returns:
+            List of dictionaries containing progression data
+        """
+        progressions_path = Path(progressions_path)
+        
+        if progressions_path.suffix == '.json':
+            print(f"   📄 Loading JSON from {progressions_path.name}")
+            with open(progressions_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            # Ensure it's a list of dicts
+            if isinstance(data, list):
+                return data
+            else:
+                raise ValueError("JSON file must contain a list of progression objects")
+        
+        elif progressions_path.suffix == '.csv':
+            print(f"   📄 Loading CSV from {progressions_path.name}")
+            df = pd.read_csv(progressions_path)
+            # Convert DataFrame to list of dicts
+            return df.to_dict('records')
+        
+        else:
+            raise ValueError(f"Unsupported file format: {progressions_path.suffix}. Use .csv or .json")
     
     def _initialize_pdf_vectorstore(self, pdf_chunks):
         """Initialize or load PDF vectorstore"""
@@ -65,17 +105,17 @@ class ChordProgressionRAG:
         print("🔍 Creating progression vectorstore...")
         
         progression_docs = []
-        for _, row in self.progressions_df.iterrows():
-            text = f"Progression: {row['progression_roman']}. "
-            text += f"Chords: {row['chords_example']}. "
-            text += f"Frequency: {row['frequency']}. "
-            text += f"Genres: {row['genres']}. "
-            text += f"Mood: {row['mood']}. "
-            text += f"Famous songs: {row['example_songs']}"
+        for progression in self.progressions_data:
+            text = f"Progression: {progression['progression_roman']}. "
+            text += f"Chords: {progression['chords_example']}. "
+            text += f"Frequency: {progression['frequency']}. "
+            text += f"Genres: {progression['genres']}. "
+            text += f"Mood: {progression['mood']}. "
+            text += f"Famous songs: {progression['example_songs']}"
             
             doc = Document(
                 page_content=text,
-                metadata=row.to_dict()
+                metadata=progression
             )
             progression_docs.append(doc)
         
@@ -200,27 +240,24 @@ class ChordProgressionRAG:
         if not (genre or mood):
             return self.search_progressions(query, k)
         
-        # Build filter conditions
-        must_conditions = []
+        # Filter progressions based on genre and/or mood
+        filtered_data = self.progressions_data
         
         if genre:
             # Check if genre is in the comma-separated genres field
-            filtered_df = self.progressions_df[
-                self.progressions_df['genres'].str.contains(genre, case=False, na=False)
+            filtered_data = [
+                p for p in filtered_data 
+                if genre.lower() in p['genres'].lower()
             ]
         
         if mood:
             # Check if mood is in the comma-separated moods field  
-            if genre:
-                filtered_df = filtered_df[
-                    filtered_df['mood'].str.contains(mood, case=False, na=False)
-                ]
-            else:
-                filtered_df = self.progressions_df[
-                    self.progressions_df['mood'].str.contains(mood, case=False, na=False)
-                ]
+            filtered_data = [
+                p for p in filtered_data 
+                if mood.lower() in p['mood'].lower()
+            ]
         
-        if len(filtered_df) == 0:
+        if len(filtered_data) == 0:
             print(f"⚠️  No progressions found with genre={genre}, mood={mood}. Using unfiltered search.")
             return self.search_progressions(query, k)
         
@@ -228,15 +265,15 @@ class ChordProgressionRAG:
         filtered_docs = []
         from langchain_core.documents import Document
         
-        for _, row in filtered_df.iterrows():
-            text = f"Progression: {row['progression_roman']}. "
-            text += f"Chords: {row['chords_example']}. "
-            text += f"Frequency: {row['frequency']}. "
-            text += f"Genres: {row['genres']}. "
-            text += f"Mood: {row['mood']}. "
-            text += f"Famous songs: {row['example_songs']}"
+        for progression in filtered_data:
+            text = f"Progression: {progression['progression_roman']}. "
+            text += f"Chords: {progression['chords_example']}. "
+            text += f"Frequency: {progression['frequency']}. "
+            text += f"Genres: {progression['genres']}. "
+            text += f"Mood: {progression['mood']}. "
+            text += f"Famous songs: {progression['example_songs']}"
             
-            doc = Document(page_content=text, metadata=row.to_dict())
+            doc = Document(page_content=text, metadata=progression)
             filtered_docs.append(doc)
         
         # Embed and search within filtered set

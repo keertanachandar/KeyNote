@@ -13,7 +13,7 @@ KeyNote helps independent musicians overcome the creative bottleneck of selectin
 1. **Analyzing lyrics** to extract mood, themes, emotional arc, and section-specific needs (verse/chorus/bridge)
 2. **Tracking emotional journey** from beginning to end (e.g., "grief to acceptance," "nostalgia to celebration")
 3. **Identifying emotional peaks** and providing specific harmonic suggestions for climactic moments
-4. **Retrieving relevant progressions** from a curated database of 69 progressions, matched to emotional storytelling
+4. **Retrieving relevant progressions** from a curated database of 138 progressions, matched to emotional storytelling
 5. **Providing section-specific recommendations** with different progressions for verses vs. choruses vs. bridges
 6. **Searching current trends** via Tavily to find contemporary artists using similar progressions
 7. **Retrieving music theory** explanations from PDF textbooks to explain *why* progressions work
@@ -25,6 +25,9 @@ KeyNote helps independent musicians overcome the creative bottleneck of selectin
 - 🎭 **Enhanced Emotional Arc Analysis**: Tracks emotional journey (e.g., "heartbreak to hope"), provides section-specific recommendations (verse/chorus/bridge), works with full songs or snippets
 - 🎯 **Smart Match Scoring**: Each progression option shows a percentage match (50-100%) based on mood, genre, energy, and lyrical analysis
 - 📑 **Multiple Options**: Browse 6+ chord progression alternatives with interactive tabs - click through to find your perfect match
+- 🎹 **Interactive Chord Player**: Listen to progressions with 4 instruments (piano, guitar, synth, pad), select specific chords, loop continuously, adjust tempo - perfect for finding your ideal sound
+- 🎼 **Key Transposition**: Automatically transpose all progressions to your preferred singing key with real-time adjustment - no more struggling with uncomfortable vocal ranges
+- 🔍 **Enhanced Web Search (Tavily)**: Multi-faceted search including artist-specific songwriting styles, current genre trends (2024), emotional arc matching, and production techniques
 - 🔍 **Advanced Retrieval**: Metadata filtering, query expansion, contextual reranking, hybrid search, dynamic k-value, emotional arc matching
 - 📊 **RAGAS Evaluation**: Faithfulness (0.773), Answer Relevancy (0.922), Context Precision (0.734), Context Recall (0.646)
 - 🎸 **Interactive Streamlit UI**: User-friendly interface with comprehensive lyrics analysis display (structure, peaks, section recommendations)
@@ -61,7 +64,7 @@ KeyNote/
 │   │   ├── music-theory-book1-5.pdf
 │   │   └── harmony1.pdf
 │   └── theorytab/                 # Chord progression database
-│       ├── progressions.csv       # 69 progressions with metadata
+│       ├── progressions.json      # 138 progressions with metadata (JSON format)
 │       └── generated_progressions.csv
 ├── pyproject.toml                 # Dependencies (LangChain, LangGraph, RAGAS, etc.)
 ├── uv.lock                        # Lock file (uv package manager)
@@ -471,7 +474,7 @@ KeyNote uses a sequential 5-node pipeline orchestrated by LangGraph:
 
 ### Data Sources
 
-1. **Chord Progression Database**: 69 progressions with metadata (genre, mood, frequency, example songs)
+1. **Chord Progression Database**: 138 progressions with metadata (genre, mood, frequency, example songs)
 2. **Music Theory PDFs**: 10 documents (5 textbooks, 4 chord guides, 1 harmony reference)
 3. **Tavily Web Search**: Real-time contemporary music trends
 4. **OpenAI API**: Embeddings and LLM generation
@@ -507,7 +510,7 @@ KeyNote uses a sequential 5-node pipeline orchestrated by LangGraph:
 | Dynamic k | N/A | 0.571 | N/A | Evaluation error |
 
 **Key Finding:** Simple baseline semantic search outperforms complex retrieval techniques due to:
-- High-quality curated data (69 progressions with rich metadata)
+- High-quality curated data (138 progressions with rich metadata)
 - Small dataset where semantic embeddings work well
 - OpenAI embeddings naturally capture musical concepts
 
