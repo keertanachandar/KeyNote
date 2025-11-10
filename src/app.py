@@ -348,6 +348,42 @@ if 'results' in st.session_state:
                     tab_labels.append(f"Option {i+1}")
             tabs = st.tabs(tab_labels)
             
+            # Global player controls (persist across all tabs)
+            st.markdown("---")
+            st.markdown("### 🎹 Player Settings (applies to all progressions)")
+            col1, col2, col3 = st.columns([2, 1, 1])
+            with col1:
+                st.caption("🎵 These settings apply to all progression options")
+            with col2:
+                # Initialize session state for instrument if not set
+                if 'global_instrument' not in st.session_state:
+                    st.session_state['global_instrument'] = 'piano'
+                
+                global_instrument = st.selectbox(
+                    "Instrument",
+                    ["piano", "guitar", "synth", "pad"],
+                    index=["piano", "guitar", "synth", "pad"].index(st.session_state['global_instrument']),
+                    key="global_instrument_selector",
+                    help="Choose the sound/instrument for all progressions"
+                )
+                st.session_state['global_instrument'] = global_instrument
+                
+            with col3:
+                # Initialize session state for tempo if not set
+                if 'global_tempo' not in st.session_state:
+                    st.session_state['global_tempo'] = 120
+                
+                global_tempo = st.slider(
+                    "Tempo (BPM)", 
+                    60, 180, 
+                    st.session_state['global_tempo'],
+                    key="global_tempo_slider",
+                    help="Adjust the playback speed for all progressions"
+                )
+                st.session_state['global_tempo'] = global_tempo
+            
+            st.markdown("---")
+            
             for i, (tab, scored_prog) in enumerate(zip(tabs, top_progressions)):
                 with tab:
                     prog = scored_prog['progression']
@@ -433,34 +469,14 @@ if 'results' in st.session_state:
                     # Interactive Chord Player
                     st.markdown("---")
                     st.markdown("### 🎹 Listen to This Progression")
+                    st.caption("🎵 Click play to hear • Select chords for custom playback • Loop enabled by default")
                     
-                    # Player controls
-                    col1, col2, col3 = st.columns([2, 1, 1])
-                    with col1:
-                        st.caption("🎵 Click play to hear • Select chords for custom playback • Loop continuously")
-                    with col2:
-                        instrument = st.selectbox(
-                            "Instrument",
-                            ["piano", "guitar", "synth", "pad"],
-                            index=0,
-                            key=f"instrument_{prog_key}",
-                            help="Choose the sound/instrument"
-                        )
-                    with col3:
-                        tempo = st.slider(
-                            "Tempo (BPM)", 
-                            60, 180, 100, 
-                            key=f"tempo_{prog_key}",
-                            help="Adjust the playback speed"
-                        )
-                    
-                    # Play the progression in the current key
+                    # Play the progression in the current key using global settings
                     play_chord_progression(
                         progression_roman=prog.metadata['progression_roman'],
                         chords_example=prog.metadata['chords_example'],
-                        tempo=tempo,
-                        instrument=instrument,
-                        loop=False,  # User can toggle in the player
+                        tempo=global_tempo,
+                        instrument=global_instrument,
                         widget_key=prog_key
                     )
                     

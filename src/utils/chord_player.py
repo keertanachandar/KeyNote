@@ -11,7 +11,7 @@ def play_chord_progression(
     chords_example: str, 
     tempo: int = 120,
     instrument: str = "piano",
-    loop: bool = False,
+    loop: bool = True,
     widget_key: str = "default"
 ):
     """
@@ -22,7 +22,7 @@ def play_chord_progression(
         chords_example: Chord names (e.g., "C - G - Am - F")
         tempo: BPM (default: 120)
         instrument: Sound type - "piano", "guitar", "synth", "pad" (default: "piano")
-        loop: Whether to loop continuously (default: False)
+        loop: Whether to loop continuously (default: True)
         widget_key: Unique key for widget (default: "default")
     
     Returns:
@@ -38,35 +38,39 @@ def play_chord_progression(
         notes = chord_to_notes(chord_name)
         chord_notes.append(notes)
     
-    # Instrument configurations
+    # Instrument configurations - softer, less jarring
     instruments = {
         "piano": {
             "oscillator": "sine",
-            "attack": 0.005,
-            "decay": 0.1,
-            "sustain": 0.3,
-            "release": 1.5
+            "attack": 0.08,      # Slower attack for softer start
+            "decay": 0.3,        # Longer decay
+            "sustain": 0.15,     # Lower sustain (quieter)
+            "release": 2.5,      # Longer release (smoother fade)
+            "volume": -12        # Reduce overall volume
         },
         "guitar": {
             "oscillator": "triangle",
-            "attack": 0.01,
-            "decay": 0.2,
-            "sustain": 0.2,
-            "release": 1.2
+            "attack": 0.05,
+            "decay": 0.4,
+            "sustain": 0.12,
+            "release": 2.0,
+            "volume": -14
         },
         "synth": {
-            "oscillator": "sawtooth",
-            "attack": 0.02,
-            "decay": 0.1,
-            "sustain": 0.5,
-            "release": 0.8
+            "oscillator": "triangle",  # Changed from sawtooth (less harsh)
+            "attack": 0.12,
+            "decay": 0.3,
+            "sustain": 0.2,
+            "release": 1.8,
+            "volume": -16        # Synth can be harsh, reduce more
         },
         "pad": {
             "oscillator": "sine",
-            "attack": 0.3,
-            "decay": 0.2,
-            "sustain": 0.7,
-            "release": 2.0
+            "attack": 0.5,       # Very slow attack for pad
+            "decay": 0.5,
+            "sustain": 0.4,
+            "release": 3.0,      # Long release for pad
+            "volume": -10
         }
     }
     
@@ -251,6 +255,7 @@ def play_chord_progression(
             
             // Initialize Tone.js synth with configurable instrument
             const synth = new Tone.PolySynth(Tone.Synth, {{
+                volume: {instrument_config['volume']},  // Reduce volume
                 oscillator: {{
                     type: "{instrument_config['oscillator']}"
                 }},
@@ -260,14 +265,32 @@ def play_chord_progression(
                     sustain: {instrument_config['sustain']},
                     release: {instrument_config['release']}
                 }}
-            }}).toDestination();
+            }});
 
-            // Reverb for smoother sound
+            // Low-pass filter to reduce harsh high frequencies
+            const filter = new Tone.Filter({{
+                frequency: 2000,  // Cut frequencies above 2kHz
+                type: "lowpass",
+                rolloff: -12
+            }});
+
+            // Reverb for smoother, more spacious sound
             const reverb = new Tone.Reverb({{
-                decay: 2,
-                preDelay: 0.01
-            }}).toDestination();
-            synth.connect(reverb);
+                decay: 4,        // Increased from 2 for more smoothness
+                preDelay: 0.02,
+                wet: 0.4         // 40% reverb mix
+            }});
+
+            // Compressor to even out dynamics and prevent harsh peaks
+            const compressor = new Tone.Compressor({{
+                threshold: -24,
+                ratio: 4,
+                attack: 0.003,
+                release: 0.1
+            }});
+
+            // Connect signal chain: synth → filter → reverb → compressor → output
+            synth.chain(filter, reverb, compressor, Tone.Destination);
 
             // Chord data from Python
             const progression = {chord_notes};
