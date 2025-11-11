@@ -25,7 +25,7 @@ class ChordProgressionRAG:
             progressions_path: Path to progressions file (supports .csv or .json)
             use_persistent_storage: Whether to use persistent storage (currently disabled)
         """
-        print("\n🎵 Initializing KeyNote RAG with Qdrant...")
+        print("\n🎵 Initializing MUSEic RAG with Qdrant...")
         
         self.embeddings = OpenAIEmbeddings(
             model="text-embedding-3-small",
@@ -47,7 +47,7 @@ class ChordProgressionRAG:
         # Create or load progression vectorstore
         self.progression_vectorstore = self._initialize_progression_vectorstore()
         
-        print("✓ KeyNote RAG ready!\n")
+        print("✓ MUSEic RAG ready!\n")
     
     def _load_progressions(self, progressions_path):
         """
@@ -82,7 +82,7 @@ class ChordProgressionRAG:
     
     def _initialize_pdf_vectorstore(self, pdf_chunks):
         """Initialize or load PDF vectorstore"""
-        collection_name = "keynote_pdfs"
+        collection_name = "museic_pdfs"
         
         if pdf_chunks and len(pdf_chunks) > 0:
             print("📖 Creating PDF vectorstore...")
@@ -100,7 +100,7 @@ class ChordProgressionRAG:
     
     def _initialize_progression_vectorstore(self):
         """Initialize or load progression vectorstore"""
-        collection_name = "keynote_progressions"
+        collection_name = "museic_progressions"
         
         print("🔍 Creating progression vectorstore...")
         
@@ -487,7 +487,7 @@ Top {k} indices:"""
     
     def clear_vectorstores(self):
         """Clear all vectorstore collections (useful for rebuilding)"""
-        collections = ["keynote_pdfs", "keynote_progressions"]
+        collections = ["museic_pdfs", "museic_progressions"]
         for collection_name in collections:
             try:
                 self.qdrant_client.delete_collection(collection_name)

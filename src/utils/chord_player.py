@@ -1,5 +1,5 @@
 """
-Chord Player Component for KeyNote Streamlit App
+Chord Player Component for MUSEic Streamlit App
 Uses Tone.js to play chord progressions in the browser with multiple instruments
 """
 
@@ -219,6 +219,48 @@ def play_chord_progression(
         <script>
             // Unique storage key for this progression
             const storageKey = "chord_player_{widget_key}";
+            const activePlayerKey = "chord_player_active";  // Global key to track active player
+            const thisPlayerId = "{widget_key}";
+            
+            // Check if another player is active and stop it
+            function stopOtherPlayers() {{
+                try {{
+                    const activePlayer = sessionStorage.getItem(activePlayerKey);
+                    if (activePlayer && activePlayer !== thisPlayerId) {{
+                        // Another player is active, broadcast stop signal
+                        sessionStorage.setItem(`stop_signal_${{activePlayer}}`, Date.now().toString());
+                    }}
+                    // Mark this player as active
+                    sessionStorage.setItem(activePlayerKey, thisPlayerId);
+                }} catch (e) {{
+                    console.log("Could not stop other players:", e);
+                }}
+            }}
+            
+            // Listen for stop signals from other players
+            window.addEventListener('storage', (e) => {{
+                if (e.key === `stop_signal_${{thisPlayerId}}` && isPlaying) {{
+                    stopProgression();
+                }}
+            }});
+            
+            // Also check for stop signal on interval (for same-window communication)
+            setInterval(() => {{
+                try {{
+                    const stopSignal = sessionStorage.getItem(`stop_signal_${{thisPlayerId}}`);
+                    if (stopSignal && isPlaying) {{
+                        const signalTime = parseInt(stopSignal);
+                        const now = Date.now();
+                        // If signal is recent (within 1 second), stop
+                        if (now - signalTime < 1000) {{
+                            stopProgression();
+                            sessionStorage.removeItem(`stop_signal_${{thisPlayerId}}`);
+                        }}
+                    }}
+                }} catch (e) {{
+                    // Ignore errors
+                }}
+            }}, 100);  // Check every 100ms
             
             // Load persisted state from sessionStorage
             function loadState() {{
@@ -315,23 +357,8 @@ def play_chord_progression(
                 if (chord) chord.classList.add('selected');
             }});
 
-            // Auto-stop when tab becomes inactive (user switches to different progression)
-            const observer = new IntersectionObserver((entries) => {{
-                entries.forEach(entry => {{
-                    if (!entry.isIntersecting && isPlaying) {{
-                        // Player is no longer visible, stop playback
-                        stopProgression();
-                    }}
-                }});
-            }}, {{
-                threshold: 0.1  // Stop when less than 10% visible
-            }});
-
-            // Observe the player container
-            const playerElement = document.querySelector('.player');
-            if (playerElement) {{
-                observer.observe(playerElement);
-            }}
+            // Note: Audio will automatically stop when switching tabs (component unmounts)
+            // No auto-stop on scroll - users can scroll to lyrics while music plays
 
             function toggleChordSelection(index) {{
                 const chord = document.getElementById(`chord-${{index}}`);
@@ -400,6 +427,7 @@ def play_chord_progression(
             async function playProgression() {{
                 if (isPlaying) return;
                 
+                stopOtherPlayers();  // Stop any other active players
                 isPlaying = true;
                 await Tone.start(); // Required for audio to play
                 
@@ -415,6 +443,7 @@ def play_chord_progression(
                     return;
                 }}
                 
+                stopOtherPlayers();  // Stop any other active players
                 isPlaying = true;
                 await Tone.start();
                 
@@ -427,6 +456,16 @@ def play_chord_progression(
                 synth.releaseAll();
                 document.querySelectorAll('.chord').forEach(el => el.classList.remove('active'));
                 updateStatus('Stopped');
+                
+                // Clear active player tracking if we're the active one
+                try {{
+                    const activePlayer = sessionStorage.getItem(activePlayerKey);
+                    if (activePlayer === thisPlayerId) {{
+                        sessionStorage.removeItem(activePlayerKey);
+                    }}
+                }} catch (e) {{
+                    // Ignore errors
+                }}
             }}
         </script>
     </body>
@@ -579,7 +618,7 @@ def chord_to_notes(chord_name: str) -> list:
 if __name__ == "__main__":
     st.set_page_config(page_title="Chord Player Demo", page_icon="🎵")
     
-    st.title("🎵 KeyNote Chord Player")
+    st.title("🎵 MUSEic Chord Player")
     st.write("Play chord progressions directly in your browser!")
     
     # Example usage

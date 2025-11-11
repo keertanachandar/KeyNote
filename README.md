@@ -1,14 +1,16 @@
-# KeyNote 🎵
+# MUSEic 🎵
 
-**AI-powered chord progression assistant for songwriters** using Retrieval-Augmented Generation (RAG), multi-agent orchestration (LangGraph), and advanced evaluation metrics (RAGAS).
+**The AI tool that turns your lyrical into a miracle**
+
+An AI-powered chord progression assistant for songwriters using Retrieval-Augmented Generation (RAG), multi-agent orchestration (LangGraph), and advanced evaluation metrics (RAGAS).
 
 > 📖 **[Read the Full Documentation](CERTIFICATION_CHALLENGE.md)** - Problem statement, technical architecture, evaluation results, and future roadmap.
 
 > **[LOOM RECORDING](https://www.loom.com/share/b10c6797c2074e44b138c564405e64fa?sid=9a823227-2175-4c63-8ee9-522caddbff89)**
 
-## What KeyNote Does
+## What MUSEic Does
 
-KeyNote helps independent musicians overcome the creative bottleneck of selecting chord progressions by:
+MUSEic helps independent musicians overcome the creative bottleneck of selecting chord progressions by:
 
 1. **Analyzing lyrics** to extract mood, themes, emotional arc, and section-specific needs (verse/chorus/bridge)
 2. **Tracking emotional journey** from beginning to end (e.g., "grief to acceptance," "nostalgia to celebration")
@@ -36,7 +38,7 @@ KeyNote helps independent musicians overcome the creative bottleneck of selectin
 ## Project Structure
 
 ```
-KeyNote/
+MUSEic/
 ├── maintenance.py                 # 🔧 Maintenance utility (clear caches, status)
 ├── test_enhanced_analysis.py      # 🧪 Test script for enhanced lyrics analysis
 ├── test_snippet_analysis.py       # 🧪 Test script for snippet handling
@@ -90,7 +92,7 @@ KeyNote/
 #### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/yourusername/keynote.git
-cd KeyNote
+cd MUSEic
 ```
 
 #### Step 2: Install Poppler (Required for PDF Vision Processing)
@@ -178,7 +180,7 @@ ls data/pdfs/
 
 ## Performance Optimizations 🚀
 
-KeyNote includes intelligent caching and persistent storage to dramatically reduce initialization time and API costs:
+MUSEic includes intelligent caching and persistent storage to dramatically reduce initialization time and API costs:
 
 ### PDF Processing Cache
 
@@ -213,7 +215,7 @@ python -c "from src.utils.rag_system import ChordProgressionRAG; rag = ChordProg
 
 ### Vision Processing for PDFs
 
-KeyNote uses **GPT-4 Vision** to extract content from:
+MUSEic uses **GPT-4 Vision** to extract content from:
 - Chord diagrams and tablature
 - Musical notation and sheet music
 - Theory diagrams (circle of fifths, key relationships)
@@ -227,26 +229,26 @@ docs = load_music_theory_pdfs("data/pdfs", use_cache=True, use_vision=False)
 
 ### Storage Structure
 ```
-KeyNote/
+MUSEic/
 ├── cache/
 │   └── processed_pdfs/
 │       ├── processed_documents.json  # Cached PDF content
 │       └── pdf_hashes.json          # File change detection
 └── vectorstore/                     # Persistent Qdrant storage
     ├── collection/
-    ├── keynote_pdfs/                # PDF embeddings
-    └── keynote_progressions/        # Progression embeddings
+    ├── museic_pdfs/                 # PDF embeddings
+    └── museic_progressions/         # Progression embeddings
 ```
 
-## 🚀 Running KeyNote
+## 🚀 Running MUSEic
 
 ### Run the Streamlit App
 
 Make sure your virtual environment is activated, then run:
 
 ```bash
-# Ensure you're in the KeyNote directory
-cd /path/to/KeyNote
+# Ensure you're in the MUSEic directory
+cd /path/to/MUSEic
 
 # Activate virtual environment if not already active
 source venv/bin/activate  # macOS/Linux
@@ -437,7 +439,7 @@ streamlit run src/app.py
 
 **Multi-Agent Pipeline (LangGraph):**
 
-KeyNote uses a sequential 5-node pipeline orchestrated by LangGraph:
+MUSEic uses a sequential 5-node pipeline orchestrated by LangGraph:
 
 1. **Lyrics Analysis Node** (GPT-4o-mini)
    - Extracts mood, energy, themes, style indicators, suggested genre
@@ -521,7 +523,7 @@ Full results: `src/evaluation/advanced_retrieval_comparison.csv`
 **Issue: ModuleNotFoundError**
 ```bash
 # Make sure you're in the project root and dependencies are installed
-cd /path/to/KeyNote
+cd /path/to/MUSEic
 uv sync  # or pip install -e .
 ```
 

@@ -1,0 +1,26 @@
+# FastAPI Backend Requirements
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# CORS and middleware
+python-dotenv==1.0.0
+
+# Pydantic for models
+pydantic==2.5.0
+
+# Use existing project dependencies
+# (These are already in the parent pyproject.toml)
+# langchain==0.1.0
+# langchain-openai==0.0.2
+# langchain-community==0.0.13
+# langgraph==0.0.20
+# openai==1.6.1
+# qdrant-client==1.7.0
+# tavily-python==0.2.4
+# pypdf==3.17.4
+# python-dotenv==1.0.0
+# tiktoken==0.5.2
+

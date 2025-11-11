@@ -12,7 +12,7 @@ load_dotenv()
 
 # Page config
 st.set_page_config(
-    page_title="KeyNote", 
+    page_title="MUSEic", 
     page_icon="🎸",
     layout="wide"
 )
@@ -23,7 +23,7 @@ st.set_page_config(
 def initialize_system():
     """Initialize RAG system and orchestrator"""
     print("\n" + "="*60)
-    print("INITIALIZING KEYNOTE")
+    print("INITIALIZING MUSEIC")
     print("="*60)
     
     # Load PDFs with caching and vision
@@ -46,22 +46,22 @@ def initialize_system():
     orchestrator = LangGraphOrchestrator(rag)
     
     print("="*60)
-    print("KEYNOTE READY")
+    print("MUSEIC READY")
     print("="*60 + "\n")
     
     return orchestrator
 
 # Header
-st.title("🎸 KeyNote")
-st.markdown("*AI-Powered Chord Progression Assistant for Songwriters*")
-st.markdown("Transform your lyrics and musical ideas into personalized chord progressions with AI analysis of 50+ progressions, current trends, and music theory.")
+st.title("🎸 MUSEic")
+st.markdown("*The AI tool that turns your lyrical into a miracle*")
+st.markdown("Transform your lyrics and musical ideas into personalized chord progressions with AI analysis of 250+ progressions, current trends, and music theory.")
 st.markdown("---")
 
 # Initialize system
 try:
-    with st.spinner("Initializing KeyNote... (first load: 2-5 min, subsequent loads: <5 sec)"):
+    with st.spinner("Initializing MUSEic... (first load: 2-5 min, subsequent loads: <5 sec)"):
         orchestrator = initialize_system()
-    st.success("✓ KeyNote is ready!")
+    st.success("✓ MUSEic is ready!")
 except Exception as e:
     st.error(f"❌ Initialization error: {e}")
     st.exception(e)
@@ -348,41 +348,11 @@ if 'results' in st.session_state:
                     tab_labels.append(f"Option {i+1}")
             tabs = st.tabs(tab_labels)
             
-            # Global player controls (persist across all tabs)
-            st.markdown("---")
-            st.markdown("### 🎹 Player Settings (applies to all progressions)")
-            col1, col2, col3 = st.columns([2, 1, 1])
-            with col1:
-                st.caption("🎵 These settings apply to all progression options")
-            with col2:
-                # Initialize session state for instrument if not set
-                if 'global_instrument' not in st.session_state:
-                    st.session_state['global_instrument'] = 'piano'
-                
-                global_instrument = st.selectbox(
-                    "Instrument",
-                    ["piano", "guitar", "synth", "pad"],
-                    index=["piano", "guitar", "synth", "pad"].index(st.session_state['global_instrument']),
-                    key="global_instrument_selector",
-                    help="Choose the sound/instrument for all progressions"
-                )
-                st.session_state['global_instrument'] = global_instrument
-                
-            with col3:
-                # Initialize session state for tempo if not set
-                if 'global_tempo' not in st.session_state:
-                    st.session_state['global_tempo'] = 120
-                
-                global_tempo = st.slider(
-                    "Tempo (BPM)", 
-                    60, 180, 
-                    st.session_state['global_tempo'],
-                    key="global_tempo_slider",
-                    help="Adjust the playback speed for all progressions"
-                )
-                st.session_state['global_tempo'] = global_tempo
-            
-            st.markdown("---")
+            # Initialize global player settings in session state if not set
+            if 'global_instrument' not in st.session_state:
+                st.session_state['global_instrument'] = 'piano'
+            if 'global_tempo' not in st.session_state:
+                st.session_state['global_tempo'] = 120
             
             for i, (tab, scored_prog) in enumerate(zip(tabs, top_progressions)):
                 with tab:
@@ -469,6 +439,29 @@ if 'results' in st.session_state:
                     # Interactive Chord Player
                     st.markdown("---")
                     st.markdown("### 🎹 Listen to This Progression")
+                    
+                    # Player settings (global but appear with each player)
+                    col1, col2 = st.columns([1, 1])
+                    with col1:
+                        global_instrument = st.selectbox(
+                            "Instrument",
+                            ["piano", "guitar", "synth", "pad"],
+                            index=["piano", "guitar", "synth", "pad"].index(st.session_state['global_instrument']),
+                            key=f"instrument_selector_{prog_key}",
+                            help="Choose the sound/instrument (applies to all progressions)"
+                        )
+                        st.session_state['global_instrument'] = global_instrument
+                        
+                    with col2:
+                        global_tempo = st.slider(
+                            "Tempo (BPM)", 
+                            60, 180, 
+                            st.session_state['global_tempo'],
+                            key=f"tempo_slider_{prog_key}",
+                            help="Adjust the playback speed (applies to all progressions)"
+                        )
+                        st.session_state['global_tempo'] = global_tempo
+                    
                     st.caption("🎵 Click play to hear • Select chords for custom playback • Loop enabled by default")
                     
                     # Play the progression in the current key using global settings
